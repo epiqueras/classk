@@ -27,7 +27,7 @@ export default class SignInPage extends React.Component {
     const target = event.target;
     const email = target.email.value;
     const password = target.password.value;
-    let firstAttempt = false;
+    let firstAttempt = false; // eslint-disable-line no-unused-vars
     let lastAttempt = false;
 
     if (!email) {
