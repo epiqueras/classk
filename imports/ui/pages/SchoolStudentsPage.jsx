@@ -35,7 +35,13 @@ export default class SchoolStudentsPage extends React.Component {
   }
 
   render() {
-    const studentsList = this.context.myStudents.map(student => (
+    const studentsList = this.context.myStudents.filter(student => (
+      (`${student.firstName} ${student.lastName}`).toLowerCase().includes(
+        this.state.searchValue.toLowerCase()
+      )
+    )).sort((studentA, studentB) => (
+      studentA.grade - studentB.grade
+    )).map(student => (
       <StudentInSchoolList key={student.studentId} student={student} />
     ));
 

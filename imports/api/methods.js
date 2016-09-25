@@ -30,8 +30,14 @@ export const getAppropiateRoute = new ValidatedMethod({
     if (Roles.userIsInRole(this.userId, 'school-admin', this.userId)) {
       return '/school-admin';
     }
+
+    const schoolId = Object.keys(Meteor.user().roles)[0];
+    if (Roles.userIsInRole(this.userId, 'teacher', schoolId)) {
+      return '/teacher';
+    }
+
     console.log('unmet conditions');
-    return '/';
+    // return '/';
   },
 });
 

@@ -8,21 +8,19 @@ import Alert from 'react-s-alert';
 import LoadingScreen from '../components/LoadingScreen.jsx';
 import AppNavigationBar from '../components/AppNavigationBar.jsx';
 
-export default class SchoolAdmin extends React.Component {
-
-  getChildContext() {
-    return { myTeachers: this.props.myTeachers, myStudents: this.props.myStudents };
-  }
-
+export default class Teacher extends React.Component {
   componentWillMount() {
     // Check that the user is logged in before the component mounts
     if (!Meteor.loggingIn()) {
       if (!this.context.userId) {
         Alert.error('You are not logged in.');
         this.context.router.replace('/');
-      } else if (!Roles.userIsInRole(this.context.userId, 'school-admin', this.context.userId)) {
-        Alert.error('You are not authorized to enter this page.');
-        this.context.router.replace('/');
+      } else if (this.props.user.roles) {
+        const schoolId = Object.keys(this.props.user.roles)[0];
+        if (!Roles.userIsInRole(this.context.userId, 'teacher', schoolId)) {
+          Alert.error('You are not authorized to enter this page.');
+          this.context.router.replace('/');
+        }
       }
     }
   }
@@ -33,9 +31,12 @@ export default class SchoolAdmin extends React.Component {
       if (!this.context.userId) {
         Alert.error('You are not logged in.');
         this.context.router.replace('/');
-      } else if (!Roles.userIsInRole(this.context.userId, 'school-admin', this.context.userId)) {
-        Alert.error('You are not authorized to enter this page.');
-        this.context.router.replace('/');
+      } else if (this.props.user.roles) {
+        const schoolId = Object.keys(this.props.user.roles)[0];
+        if (!Roles.userIsInRole(this.context.userId, 'teacher', schoolId)) {
+          Alert.error('You are not authorized to enter this page.');
+          this.context.router.replace('/');
+        }
       }
     }
   }
@@ -54,11 +55,9 @@ export default class SchoolAdmin extends React.Component {
     const AppBarNavigationTabs = [
       { name: 'Stats', iconName: 'DataUsage', route: '/school-admin/stats' },
       { name: 'Teachers', iconName: 'Book', route: '/school-admin/teachers' },
-      { name: 'Students', iconName: 'School', route: '/school-admin/students' },
-      { name: 'Plan & Payment', iconName: 'Payment', route: '/school-admin/plan-payment' },
     ];
 
-    const title = this.props.mySchool[0] ? this.props.mySchool[0].schoolName : 'Loading...';
+    const title = 'Teacher';
 
     return (
       <div>
@@ -78,21 +77,15 @@ export default class SchoolAdmin extends React.Component {
 
 // <div>{this.props.loading ? 'LOADING' : 'DONE LOADING'}</div>
 
-SchoolAdmin.propTypes = {
+Teacher.propTypes = {
+  user: React.PropTypes.object,
   loading: React.PropTypes.bool,
-  mySchool: React.PropTypes.array,
-  myTeachers: React.PropTypes.array,
-  myStudents: React.PropTypes.array,
+  myTeacherObject: React.PropTypes.object,
   children: React.PropTypes.element, // matched child route component
   location: React.PropTypes.object,  // current router location
 };
 
-SchoolAdmin.contextTypes = {
+Teacher.contextTypes = {
   router: React.PropTypes.object,
   userId: React.PropTypes.string,
-};
-
-SchoolAdmin.childContextTypes = {
-  myTeachers: React.PropTypes.array,
-  myStudents: React.PropTypes.array,
 };

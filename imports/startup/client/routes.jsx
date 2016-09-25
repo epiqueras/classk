@@ -13,11 +13,15 @@ import HiddenAdminPage from '../../ui/pages/HiddenAdminPage.jsx';
 import EnrollAccountPage from '../../ui/pages/EnrollAccountPage.jsx';
 import ForgotPasswordPage from '../../ui/pages/ForgotPasswordPage.jsx';
 import ResetPasswordPage from '../../ui/pages/ResetPasswordPage.jsx';
+
 import SchoolAdminContainer from '../../ui/containers/SchoolAdminContainer.jsx';
 import SchoolStatsPage from '../../ui/pages/SchoolStatsPage.jsx';
 import SchoolTeachersPage from '../../ui/pages/SchoolTeachersPage.jsx';
 import SchoolStudentsPage from '../../ui/pages/SchoolStudentsPage.jsx';
 import SchoolPaymentPage from '../../ui/pages/SchoolPaymentPage.jsx';
+
+import TeacherContainer from '../../ui/containers/TeacherContainer.jsx';
+
 import NotFoundPage from '../../ui/pages/NotFoundPage.jsx';
 
 import { getAppropiateRoute } from '../../api/methods.js';
@@ -48,9 +52,15 @@ export const renderRoutes = () => ( // eslint-disable-line import/prefer-default
         <Route path="students" component={SchoolStudentsPage} />
         <Route path="plan-payment" component={SchoolPaymentPage} />
       </Route>
+      <Route path="teacher" component={TeacherContainer}>
+      </Route>
       <Route path="hidden-admin" component={HiddenAdminPage} />
       <Route path="404" component={NotFoundPage} />
       <Redirect from="*" to="404" />
     </Route>
   </Router>
 );
+
+// <IndexRedirect to="classes" />
+//         <Route path="classes" component={TeacherClassesPage} />
+//         <Route path="students" component={TeacherStudentsPage} />

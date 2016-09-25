@@ -35,7 +35,11 @@ export default class SchoolTeachersPage extends React.Component {
   }
 
   render() {
-    const teachersList = this.context.myTeachers.map(teacher => (
+    const teachersList = this.context.myTeachers.filter(teacher => (
+      (`${teacher.firstName} ${teacher.lastName}`).toLowerCase().includes(
+        this.state.searchValue.toLowerCase()
+      )
+    )).map(teacher => (
       <TeacherInSchoolList key={teacher.teacherId} teacher={teacher} />
     ));
 
