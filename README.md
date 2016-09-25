@@ -1,2 +1,2 @@
 # eskooler
-eskooler project
+eskooler repository
