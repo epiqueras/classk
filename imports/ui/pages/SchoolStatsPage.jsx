@@ -1,6 +1,5 @@
 import React from 'react';
 import ProgressBar from 'react-progressbar.js';
-import CircularProgress from 'material-ui/CircularProgress';
 
 export default class SchoolStatsPage extends React.Component {
   constructor(props) {
@@ -15,17 +14,48 @@ export default class SchoolStatsPage extends React.Component {
     const numberOfStudents = this.context.myStudents.length;
     const numberOfUsers = numberOfTeachers + numberOfStudents;
     const userWheelValue = numberOfUsers / 100;
-    const wheelOptions = {
-      color: '#00BCD4',
-      trailColor: '#eee',
+    const userWheelOptions = {
+      color: '#aaa',
+      // This has to be the same size as the maximum width to
+      // prevent clipping
+      strokeWidth: 4,
       trailWidth: 1,
+      easing: 'easeInOut',
       duration: 1400,
-      easing: 'bounce',
-      strokeWidth: 6,
-      from: { color: '#00BCD4', a: 0 },
-      to: { color: '#3F51B5', a: 1 },
+      text: {
+        autoStyleContainer: true,
+        size: 250,
+      },
+      from: { color: '#00BCD4', width: 1 },
+      to: { color: '#3F51B5', width: 4 },
+      // Set default step function for all animate calls
       step: (state, circle) => {
         circle.path.setAttribute('stroke', state.color);
+        circle.path.setAttribute('stroke-width', state.width);
+        const value = Math.round(circle.value() * 100);
+        circle.setText(`${value}/${100}`);
+      },
+    };
+    const answeredWheelOptions = {
+      color: '#aaa',
+      // This has to be the same size as the maximum width to
+      // prevent clipping
+      strokeWidth: 4,
+      trailWidth: 1,
+      easing: 'easeInOut',
+      duration: 1400,
+      text: {
+        autoStyleContainer: true,
+        size: 250,
+      },
+      from: { color: '#00BCD4', width: 1 },
+      to: { color: '#3F51B5', width: 4 },
+      // Set default step function for all animate calls
+      step: (state, circle) => {
+        circle.path.setAttribute('stroke', state.color);
+        circle.path.setAttribute('stroke-width', state.width);
+        const value = Math.round(circle.value() * 100);
+        circle.setText(`${value}%`);
       },
     };
     return (
@@ -34,14 +64,16 @@ export default class SchoolStatsPage extends React.Component {
           <div className="row">
             <div className="col-xs-12">
               <br />
-              <h2>Users: <span className="lighter-text">{numberOfUsers}/100</span></h2>
+              <h2>Users</h2>
             </div>
             <div className="col-xs-12">
               <div className="row middle-xs center-xs">
                 <div className="col-xs-9 col-md-4">
                   <ProgressBar.Circle
                     progress={userWheelValue}
-                    options={wheelOptions}
+                    options={userWheelOptions}
+                    initialAnimate
+                    containerStyle={{ fontSize: '8rem' }}
                   />
                 </div>
                 <div className="col-xs-12 col-md-3">
@@ -58,16 +90,15 @@ export default class SchoolStatsPage extends React.Component {
           <div className="row">
             <div className="col-xs-12">
               <br />
-              <h2>Questions Answered <span className="lighter-text">
-                {this.state.completed}/100
-              </span></h2>
+              <h2>Questions Answered</h2>
             </div>
             <div className="col-xs-12">
               <div className="row middle-xs center-xs">
                 <div className="col-xs-9 col-md-4">
                   <ProgressBar.Circle
                     progress={this.state.completed / 100}
-                    options={wheelOptions}
+                    options={answeredWheelOptions}
+                    initialAnimate
                   />
                 </div>
                 <div className="col-xs-4 col-md-3">

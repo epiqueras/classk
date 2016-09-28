@@ -23,9 +23,7 @@ Meteor.publish('teachers.myTeacherObject', function publishMyTeacherObject() {
     return null;
   }
   const schoolId = teacherObject.schoolId;
-  console.log('subscribing');
   if (Roles.userIsInRole(this.userId, 'teacher', schoolId)) {
-    console.log('authorized');
     return Teachers.find({
       teacherId: this.userId,
     }, {

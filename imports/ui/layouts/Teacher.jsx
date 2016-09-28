@@ -9,6 +9,10 @@ import LoadingScreen from '../components/LoadingScreen.jsx';
 import AppNavigationBar from '../components/AppNavigationBar.jsx';
 
 export default class Teacher extends React.Component {
+  getChildContext() {
+    return { mySchoolStudents: this.props.mySchoolStudents };
+  }
+
   componentWillMount() {
     // Check that the user is logged in before the component mounts
     if (!Meteor.loggingIn()) {
@@ -53,8 +57,9 @@ export default class Teacher extends React.Component {
     });
 
     const AppBarNavigationTabs = [
-      { name: 'Stats', iconName: 'DataUsage', route: '/school-admin/stats' },
-      { name: 'Teachers', iconName: 'Book', route: '/school-admin/teachers' },
+      { name: 'Stats', iconName: 'DataUsage', route: '/teacher/stats' },
+      { name: 'Classes', iconName: 'Group', route: '/teacher/classes' },
+      { name: 'Assignments', iconName: 'Assignment', route: '/teacher/assignments' },
     ];
 
     const title = 'Teacher';
@@ -81,6 +86,7 @@ Teacher.propTypes = {
   user: React.PropTypes.object,
   loading: React.PropTypes.bool,
   myTeacherObject: React.PropTypes.object,
+  mySchoolStudents: React.PropTypes.array,
   children: React.PropTypes.element, // matched child route component
   location: React.PropTypes.object,  // current router location
 };
@@ -88,4 +94,8 @@ Teacher.propTypes = {
 Teacher.contextTypes = {
   router: React.PropTypes.object,
   userId: React.PropTypes.string,
+};
+
+Teacher.childContextTypes = {
+  mySchoolStudents: React.PropTypes.array,
 };

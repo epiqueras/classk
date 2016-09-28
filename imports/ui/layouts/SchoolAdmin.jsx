@@ -9,7 +9,6 @@ import LoadingScreen from '../components/LoadingScreen.jsx';
 import AppNavigationBar from '../components/AppNavigationBar.jsx';
 
 export default class SchoolAdmin extends React.Component {
-
   getChildContext() {
     return { myTeachers: this.props.myTeachers, myStudents: this.props.myStudents };
   }
