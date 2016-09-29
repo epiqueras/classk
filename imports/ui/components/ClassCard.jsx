@@ -52,7 +52,10 @@ export default class ClassCard extends React.Component {
           <FlatButton label="Edit Members" onTouchTap={this.toggleCardExpanded} />
         </CardActions>
         <CardText expandable>
-          <Subheader style={{ textAlign: 'center', marginBottom: '2%' }}>Students</Subheader>
+          <Divider />
+          <Subheader style={{ textAlign: 'center', marginTop: '0.5%', marginBottom: '0.5%' }}>
+            Students
+          </Subheader>
           <Divider />
           <AddStudentToClass
             mySchoolStudents={this.props.mySchoolStudents}
