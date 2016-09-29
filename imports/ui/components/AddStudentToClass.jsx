@@ -1,10 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import Alert from 'react-s-alert';
-
 import AutoComplete from 'material-ui/AutoComplete';
 import MenuItem from 'material-ui/MenuItem';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
+
+import { addToClass } from '../../api/classes/methods.js';
 
 export default class AddStudentToClass extends React.Component {
   constructor(props) {
@@ -16,7 +17,16 @@ export default class AddStudentToClass extends React.Component {
     this.handleUpdateInput = this.handleUpdateInput.bind(this);
   }
 
-  handleNewRequest() {
+  handleNewRequest(chosenRequest) {
+    const theClassId = this.props.theClassId;
+    const studentId = chosenRequest.studentId;
+    addToClass.call({ theClassId, studentId }, (error) => {
+      if (error) {
+        Alert.error(error.reason);
+      } else {
+        Alert.success('Student added to class.');
+      }
+    });
     this.setState({ searchText: '' });
   }
 
@@ -34,6 +44,7 @@ export default class AddStudentToClass extends React.Component {
             rightIcon={<PersonAdd />}
           />
         ),
+        studentId: student.studentId,
       }
     ));
 
@@ -58,4 +69,5 @@ export default class AddStudentToClass extends React.Component {
 
 AddStudentToClass.propTypes = {
   mySchoolStudents: React.PropTypes.array,
+  theClassId: React.PropTypes.string,
 };

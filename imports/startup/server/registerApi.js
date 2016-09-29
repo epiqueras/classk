@@ -15,3 +15,7 @@ import '../../api/students/server/publications.js';
 // teachers
 import '../../api/teachers/methods.js';
 import '../../api/teachers/server/publications.js';
+
+// classes
+import '../../api/classes/methods.js';
+import '../../api/classes/server/publications.js';

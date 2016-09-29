@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
-import { createTeacherUser } from '../../api/methods.js';
+import { insertNewClass } from '../../api/classes/methods.js';
 
 export default class AddClassForm extends React.Component {
   constructor(props) {
@@ -17,36 +17,30 @@ export default class AddClassForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const target = event.target;
-    const theClassName = target.theClassName.value;
-    const theClassDescription = target.theClassDescription.value;
-    // if (!firstName) {
-    //   this.setState({
-    //     errors: { firstName: 'First name is required.' },
-    //   });
-    //   return;
-    // }
-    // if (!lastName) {
-    //   this.setState({
-    //     errors: { lastName: 'Last name is required.' },
-    //   });
-    //   return;
-    // }
-    // if (!email) {
-    //   this.setState({
-    //     errors: { email: "The teacher's email address is required." },
-    //   });
-    //   return;
-    // }
-    // createTeacherUser.call({ firstName, lastName, email }, (error) => {
-    //   if (error) {
-    //     Alert.error(error.reason);
-    //   } else {
-    //     Alert.success('Teacher account created successfuly.');
-    //     this.props.toggleForm();
-    //   }
-    // });
-    target.theClassName.value = '';
-    target.theClassDescription.value = '';
+    const name = target.name.value;
+    const description = target.description.value;
+    if (!name) {
+      this.setState({
+        errors: { name: 'Class name is required.' },
+      });
+      return;
+    }
+    if (!description) {
+      this.setState({
+        errors: { description: 'Class description is required.' },
+      });
+      return;
+    }
+    insertNewClass.call({ name, description }, (error) => {
+      if (error) {
+        Alert.error(error.reason);
+      } else {
+        Alert.success('Class created successfuly. Now add some students to it!');
+        this.props.toggleForm();
+      }
+    });
+    target.name.value = '';
+    target.description.value = '';
   }
 
   render() {
@@ -57,19 +51,19 @@ export default class AddClassForm extends React.Component {
           <Paper zDepth={1}>
             <form onChange={(e) => { e.stopPropagation(); }} onSubmit={this.onSubmit}>
               <TextField
-                name="theClassName"
+                name="name"
                 type="text"
                 hintText="Class Name"
                 floatingLabelText="Class Name"
-                errorText={this.state.errors.theClassName}
+                errorText={this.state.errors.name}
               />
               <br />
               <TextField
-                name="theClassDescription"
+                name="description"
                 type="text"
                 hintText="Description"
                 floatingLabelText="Description"
-                errorText={this.state.errors.theClassDescription}
+                errorText={this.state.errors.description}
               />
               <br /><br /><br />
               <RaisedButton type="submit" label="Create Class" primary />

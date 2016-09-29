@@ -1,11 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import Alert from 'react-s-alert';
 import { List } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
-import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 
 import StudentInClassList from './StudentInClassList.jsx';
 import AddStudentToClass from './AddStudentToClass.jsx';
@@ -32,7 +33,9 @@ export default class ClassCard extends React.Component {
   render() {
     const theClass = this.props.theClass;
 
-    const studentsInClassList = this.props.mySchoolStudents.map((student) => (
+    const studentsInClassList = this.props.mySchoolStudents.filter(student => (
+      theClass.studentIds.includes(student.studentId)
+    )).map(student => (
       <StudentInClassList key={student.studentId} student={student} />
     ));
 
@@ -51,7 +54,10 @@ export default class ClassCard extends React.Component {
         <CardText expandable>
           <Subheader style={{ textAlign: 'center', marginBottom: '2%' }}>Students</Subheader>
           <Divider />
-          <AddStudentToClass mySchoolStudents={this.props.mySchoolStudents} />
+          <AddStudentToClass
+            mySchoolStudents={this.props.mySchoolStudents}
+            theClassId={this.props.theClass._id}
+          />
           <List>
             {studentsInClassList}
           </List>

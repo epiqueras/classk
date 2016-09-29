@@ -13,17 +13,13 @@ Classes.deny({
   remove() { return true; },
 });
 
-const StudentSchema = new SimpleSchema({
-  studentId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  firstName: { type: String },
-  lastName: { type: String },
-});
-
 Classes.schema = new SimpleSchema({
   _id: { type: String, regEx: SimpleSchema.RegEx.Id },
+  schoolId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  teacherId: { type: String, regEx: SimpleSchema.RegEx.Id },
   name: { type: String },
   description: { type: String },
-  students: { type: [StudentSchema] },
+  studentIds: { type: [String], defaultValue: [] },
 });
 
 Classes.attachSchema(Classes.schema);
@@ -32,7 +28,9 @@ Classes.attachSchema(Classes.schema);
 // to the client. If we add secret properties to List objects, don't list
 // them here to keep them private to the server.
 Classes.publicFields = {
+  schoolId: 1,
+  teacherId: 1,
   name: 1,
   description: 1,
-  students: 1,
+  studentIds: 1,
 };
