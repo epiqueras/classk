@@ -11,11 +11,6 @@ import LoadingScreen from '../components/LoadingScreen.jsx';
 import AddClassForm from '../components/AddClassForm.jsx';
 import ClassCard from '../components/ClassCard.jsx';
 
-// TODO:
-// Remove students from class.
-// Check styles.
-// Move on to assignments.
-
 export default class TeacherClassesPage extends React.Component {
   constructor(props) {
     super(props);

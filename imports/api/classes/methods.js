@@ -53,7 +53,8 @@ export const addToClass = new ValidatedMethod({
         'Class does not exist.');
     }
     const schoolId = teacherObject.schoolId;
-    if (!Roles.userIsInRole(this.userId, 'teacher', schoolId)) {
+    if (!Roles.userIsInRole(this.userId, 'teacher', schoolId)
+      || classObject.teacherId !== teacherObject.teacherId) {
       throw new Meteor.Error('utility.addToClass.unauthorized',
         'Only teachers may add students to their classes.');
     } else if (classObject.studentIds.includes(studentId)) {
@@ -61,6 +62,64 @@ export const addToClass = new ValidatedMethod({
         'Student is already in this class.');
     } else {
       Classes.update({ _id: theClassId }, { $push: { studentIds: studentId } });
+    }
+  },
+});
+
+export const removeFromClass = new ValidatedMethod({
+  name: 'classes.removeFromClass',
+  validate: new SimpleSchema({
+    theClassId: { type: String },
+    studentId: { type: String },
+  }).validator(),
+  run({ theClassId, studentId }) {
+    const teacherObject = Teachers.findOne({ teacherId: this.userId });
+    const classObject = Classes.findOne({ _id: theClassId, teacherId: this.userId });
+    if (!teacherObject) {
+      throw new Meteor.Error('classes.removeFromClass.unauthorized',
+        'You are not a teacher.');
+    }
+    if (!classObject) {
+      throw new Meteor.Error('classes.removeFromClass.unauthorized',
+        'Class does not exist.');
+    }
+    const schoolId = teacherObject.schoolId;
+    if (!Roles.userIsInRole(this.userId, 'teacher', schoolId)
+      || classObject.teacherId !== teacherObject.teacherId) {
+      throw new Meteor.Error('utility.removeFromClass.unauthorized',
+        'Only teachers may remove students from their classes.');
+    } else if (!classObject.studentIds.includes(studentId)) {
+      throw new Meteor.Error('utility.removeFromClass.unauthorized',
+        'Student is not in this class.');
+    } else {
+      Classes.update({ _id: theClassId }, { $pull: { studentIds: studentId } });
+    }
+  },
+});
+
+export const deleteClass = new ValidatedMethod({
+  name: 'classes.deleteClass',
+  validate: new SimpleSchema({
+    theClassId: { type: String },
+  }).validator(),
+  run({ theClassId }) {
+    const teacherObject = Teachers.findOne({ teacherId: this.userId });
+    const classObject = Classes.findOne({ _id: theClassId, teacherId: this.userId });
+    if (!teacherObject) {
+      throw new Meteor.Error('classes.deleteClass.unauthorized',
+        'You are not a teacher.');
+    }
+    if (!classObject) {
+      throw new Meteor.Error('classes.deleteClass.unauthorized',
+        'Class does not exist.');
+    }
+    const schoolId = teacherObject.schoolId;
+    if (!Roles.userIsInRole(this.userId, 'teacher', schoolId)
+      || classObject.teacherId !== teacherObject.teacherId) {
+      throw new Meteor.Error('utility.deleteClass.unauthorized',
+        'Only teachers may delete their classes.');
+    } else {
+      Classes.remove({ _id: theClassId });
     }
   },
 });

@@ -23,6 +23,7 @@ export default class AppNavigationBar extends React.Component {
 
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
 
   getIconElement(iconName) {
@@ -50,6 +51,10 @@ export default class AppNavigationBar extends React.Component {
 
   handleClose() {
     this.setState({ open: false });
+  }
+
+  refresh() {
+    this.context.router.replace('/');
   }
 
   logout() {
@@ -80,8 +85,7 @@ export default class AppNavigationBar extends React.Component {
               targetOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
-              <MenuItem primaryText="Refresh" />
-              <MenuItem primaryText="Help" />
+              <MenuItem primaryText="Refresh" onTouchTap={this.refresh} />
               <MenuItem primaryText="Sign out" onTouchTap={this.logout} />
             </IconMenu>
           }
@@ -102,4 +106,8 @@ export default class AppNavigationBar extends React.Component {
 AppNavigationBar.propTypes = {
   title: React.PropTypes.string,
   navigationTabs: React.PropTypes.array,
+};
+
+AppNavigationBar.contextTypes = {
+  router: React.PropTypes.object,
 };

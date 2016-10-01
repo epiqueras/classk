@@ -7,9 +7,16 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import { grey400 } from 'material-ui/styles/colors';
+import IconButton from 'material-ui/IconButton';
+import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 import StudentInClassList from './StudentInClassList.jsx';
 import AddStudentToClass from './AddStudentToClass.jsx';
+
+import { deleteClass } from '../../api/classes/methods.js';
 
 export default class ClassCard extends React.Component {
   constructor(props) {
@@ -19,7 +26,7 @@ export default class ClassCard extends React.Component {
     };
     this.handleExpandChange = this.handleExpandChange.bind(this);
     this.toggleCardExpanded = this.toggleCardExpanded.bind(this);
-    // this.deleteStudent = this.deleteStudent.bind(this);
+    this.deleteTheClass = this.deleteTheClass.bind(this);
   }
 
   handleExpandChange(isExpanded) {
@@ -30,14 +37,39 @@ export default class ClassCard extends React.Component {
     this.setState({ cardExpanded: !this.state.cardExpanded });
   }
 
+  deleteTheClass() {
+    const theClassId = this.props.theClass._id;
+    deleteClass.call({ theClassId }, (error) => {
+      if (error) {
+        Alert.error(error.reason);
+      } else {
+        Alert.success('Class deleted succesfuly.');
+      }
+    });
+  }
+
   render() {
     const theClass = this.props.theClass;
 
     const studentsInClassList = this.props.mySchoolStudents.filter(student => (
       theClass.studentIds.includes(student.studentId)
     )).map(student => (
-      <StudentInClassList key={student.studentId} student={student} />
+      <StudentInClassList
+        key={student.studentId}
+        student={student}
+        theClassId={this.props.theClass._id}
+      />
     ));
+
+    const iconButtonElement = (
+      <IconButton
+        touch
+        tooltip="Delete Class"
+        tooltipPosition="top-right"
+      >
+        <DeleteForever color={grey400} />
+      </IconButton>
+    );
 
     return (
       <Card expanded={this.state.cardExpanded} onExpandChange={this.handleExpandChange}>
@@ -50,6 +82,9 @@ export default class ClassCard extends React.Component {
         <CardActions>
           <FlatButton label="Assignments" />
           <FlatButton label="Edit Members" onTouchTap={this.toggleCardExpanded} />
+          <IconMenu iconButtonElement={iconButtonElement} style={{ float: 'right' }}>
+            <MenuItem onTouchTap={this.deleteTheClass}>Confirm Deletion</MenuItem>
+          </IconMenu>
         </CardActions>
         <CardText expandable>
           <Divider />

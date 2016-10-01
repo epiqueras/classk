@@ -19,3 +19,7 @@ import '../../api/teachers/server/publications.js';
 // classes
 import '../../api/classes/methods.js';
 import '../../api/classes/server/publications.js';
+
+// assignments
+import '../../api/assignments/methods.js';
+import '../../api/assignments/server/publications.js';

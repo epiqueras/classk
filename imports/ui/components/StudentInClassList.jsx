@@ -11,23 +11,25 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 
-import { deleteStudentUser } from '../../api/methods.js';
+import { removeFromClass } from '../../api/classes/methods.js';
 
 export default class StudentInSchoolList extends React.Component {
   constructor(props) {
     super(props);
-    // this.deleteStudent = this.deleteStudent.bind(this);
+    this.removeStudent = this.removeStudent.bind(this);
   }
 
-  // deleteStudent() {
-  //   deleteStudentUser.call({ studentId: this.props.student.studentId }, (error) => {
-  //     if (error) {
-  //       Alert.error(error.reason);
-  //     } else {
-  //       Alert.success('Student account deleted successfuly.');
-  //     }
-  //   });
-  // }
+  removeStudent() {
+    const theClassId = this.props.theClassId;
+    const studentId = this.props.student.studentId;
+    removeFromClass.call({ theClassId, studentId }, (error) => {
+      if (error) {
+        Alert.error(error.reason);
+      } else {
+        Alert.success('Student removed successfuly.');
+      }
+    });
+  }
 
   render() {
     const { student } = this.props;
@@ -44,7 +46,7 @@ export default class StudentInSchoolList extends React.Component {
 
     const rightIconMenu = (
       <IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem>Remove</MenuItem>
+        <MenuItem onTouchTap={this.removeStudent}>Remove</MenuItem>
       </IconMenu>
     );
     return (
@@ -77,4 +79,5 @@ export default class StudentInSchoolList extends React.Component {
 
 StudentInSchoolList.propTypes = {
   student: React.PropTypes.object,
+  theClassId: React.PropTypes.string,
 };
