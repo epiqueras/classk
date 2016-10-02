@@ -22,6 +22,10 @@ export default class TeacherClassesPage extends React.Component {
     this.toggleForm = this.toggleForm.bind(this);
   }
 
+  componentDidMount() {
+    this.context.changeNavbarText(' - Classes');
+  }
+
   handleChange(event) {
     this.setState({
       searchValue: event.target.value,
@@ -104,4 +108,5 @@ TeacherClassesPage.propTypes = {
 
 TeacherClassesPage.contextTypes = {
   mySchoolStudents: React.PropTypes.array,
+  changeNavbarText: React.PropTypes.func,
 };

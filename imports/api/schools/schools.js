@@ -16,7 +16,7 @@ Schools.deny({
 Schools.schema = new SimpleSchema({
   _id: { type: String, regEx: SimpleSchema.RegEx.Id },
   schoolId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  schoolName: { type: String },
+  schoolName: { type: String, max: 30 },
   createdAt: { type: Date, defaultValue: new Date() },
 });
 

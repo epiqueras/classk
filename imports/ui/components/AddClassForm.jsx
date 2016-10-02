@@ -25,9 +25,21 @@ export default class AddClassForm extends React.Component {
       });
       return;
     }
+    if (name.length > 30) {
+      this.setState({
+        errors: { name: 'Class name may not exceed 30 characters.' },
+      });
+      return;
+    }
     if (!description) {
       this.setState({
         errors: { description: 'Class description is required.' },
+      });
+      return;
+    }
+    if (description.length > 150) {
+      this.setState({
+        errors: { description: 'Class description may not exceed 150 characters.' },
       });
       return;
     }

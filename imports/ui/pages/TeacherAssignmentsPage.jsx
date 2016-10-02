@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import AssignmentReturned from 'material-ui/svg-icons/action/assignment-returned';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -16,6 +17,24 @@ export default class TeacherAssignmentsPage extends React.Component {
       createButtonToggled: false,
     };
     this.toggleForm = this.toggleForm.bind(this);
+  }
+
+  componentDidUpdate() {
+    let className = '';
+    if (this.props.myClasses) {
+      className = this.props.myClasses.filter(theClass => (
+        theClass._id === this.props.classId
+      ));
+      if (className.length === 0) {
+        className = 'All Classes';
+        if (this.props.classId) {
+          this.context.router.replace('/teacher/classes');
+        }
+      } else {
+        className = className[0].name;
+      }
+    }
+    this.context.changeNavbarText(` - Assignments for ${className}`);
   }
 
   toggleForm() {
@@ -50,7 +69,11 @@ export default class TeacherAssignmentsPage extends React.Component {
             </div>
             <div className="row">
               <div className="col-xs-12">
-                <AssignmentsList />
+                <AssignmentsList
+                  assignments={this.props.myAssignments}
+                  classId={this.props.classId}
+                  myClasses={this.props.myClasses}
+                />
               </div>
             </div>
           </div>
@@ -68,4 +91,6 @@ TeacherAssignmentsPage.propTypes = {
 };
 
 TeacherAssignmentsPage.contextTypes = {
+  changeNavbarText: React.PropTypes.func,
+  router: React.PropTypes.object,
 };

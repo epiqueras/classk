@@ -17,8 +17,8 @@ Classes.schema = new SimpleSchema({
   _id: { type: String, regEx: SimpleSchema.RegEx.Id },
   schoolId: { type: String, regEx: SimpleSchema.RegEx.Id },
   teacherId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  name: { type: String },
-  description: { type: String },
+  name: { type: String, max: 30 },
+  description: { type: String, max: 150 },
   studentIds: { type: [String], defaultValue: [] },
 });
 

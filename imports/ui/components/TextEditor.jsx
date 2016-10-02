@@ -35,7 +35,8 @@ export default class TextEditor extends React.Component {
 
   onTextChange(value) {
     const jsonString = JSON.stringify(this.refs.quillRef.getEditor().getContents());
-    this.props.getContentJson(jsonString);
+    const textLength = this.refs.quillRef.getEditor().getLength();
+    this.props.getContentJson(jsonString, textLength);
     this.setState({ editorContent: value });
   }
 

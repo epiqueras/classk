@@ -12,10 +12,11 @@ import { Classes } from '../classes/classes.js';
 export const insertNewAssignment = new ValidatedMethod({
   name: 'classes.insertNewAssignment',
   validate: new SimpleSchema({
-    title: { type: String },
-    theClassId: { type: String },
+    title: { type: String, max: 30 },
+    theClassId: { type: String, regEx: SimpleSchema.RegEx.Id },
     dueDate: { type: Date },
-    textJson: { type: String },
+    textJson: { type: String, max: 100000 },
+    textCount: { type: Number, max: 10000 },
   }).validator(),
   run({ title, theClassId, dueDate, textJson }) {
     const teacherObject = Teachers.findOne({ teacherId: this.userId });

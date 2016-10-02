@@ -9,8 +9,17 @@ import LoadingScreen from '../components/LoadingScreen.jsx';
 import AppNavigationBar from '../components/AppNavigationBar.jsx';
 
 export default class Teacher extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { navbarText: '' };
+    this.changeNavbarText = this.changeNavbarText.bind(this);
+  }
+
   getChildContext() {
-    return { mySchoolStudents: this.props.mySchoolStudents };
+    return {
+      mySchoolStudents: this.props.mySchoolStudents,
+      changeNavbarText: this.changeNavbarText,
+    };
   }
 
   componentWillMount() {
@@ -45,8 +54,13 @@ export default class Teacher extends React.Component {
     }
   }
 
+  changeNavbarText(text) {
+    this.setState({ navbarText: text });
+  }
+
   render() {
     const {
+      myTeacherObject,
       children,
       location,
     } = this.props;
@@ -62,14 +76,12 @@ export default class Teacher extends React.Component {
       { name: 'Assignments', iconName: 'Assignment', route: '/teacher/assignments' },
     ];
 
-    const title = 'Teacher';
-
     return (
       <div>
         {this.props.loading ? <LoadingScreen /> :
           <div>
             <AppNavigationBar
-              title={title}
+              title={myTeacherObject.firstName + this.state.navbarText}
               navigationTabs={AppBarNavigationTabs}
             />
             {clonedChildren}
@@ -98,4 +110,5 @@ Teacher.contextTypes = {
 
 Teacher.childContextTypes = {
   mySchoolStudents: React.PropTypes.array,
+  changeNavbarText: React.PropTypes.func,
 };

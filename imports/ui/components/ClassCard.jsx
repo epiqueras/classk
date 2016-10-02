@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
+import { Link } from 'react-router';
 import Alert from 'react-s-alert';
 import { List } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
@@ -80,7 +81,9 @@ export default class ClassCard extends React.Component {
           showExpandableButton
         />
         <CardActions>
-          <FlatButton label="Assignments" />
+          <Link to={`/teacher/assignments/${theClass._id}`}>
+            <FlatButton label="Assignments" />
+          </Link>
           <FlatButton label="Edit Members" onTouchTap={this.toggleCardExpanded} />
           <IconMenu iconButtonElement={iconButtonElement} style={{ float: 'right' }}>
             <MenuItem onTouchTap={this.deleteTheClass}>Confirm Deletion</MenuItem>

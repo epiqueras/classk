@@ -11,8 +11,8 @@ import { Teachers } from '../teachers/teachers.js';
 export const insertNewClass = new ValidatedMethod({
   name: 'classes.insertNewClass',
   validate: new SimpleSchema({
-    name: { type: String },
-    description: { type: String },
+    name: { type: String, max: 30 },
+    description: { type: String, max: 150 },
   }).validator(),
   run({ name, description }) {
     const teacherObject = Teachers.findOne({ teacherId: this.userId });
@@ -38,8 +38,8 @@ export const insertNewClass = new ValidatedMethod({
 export const addToClass = new ValidatedMethod({
   name: 'classes.addToClass',
   validate: new SimpleSchema({
-    theClassId: { type: String },
-    studentId: { type: String },
+    theClassId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    studentId: { type: String, regEx: SimpleSchema.RegEx.Id },
   }).validator(),
   run({ theClassId, studentId }) {
     const teacherObject = Teachers.findOne({ teacherId: this.userId });
@@ -69,8 +69,8 @@ export const addToClass = new ValidatedMethod({
 export const removeFromClass = new ValidatedMethod({
   name: 'classes.removeFromClass',
   validate: new SimpleSchema({
-    theClassId: { type: String },
-    studentId: { type: String },
+    theClassId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    studentId: { type: String, regEx: SimpleSchema.RegEx.Id },
   }).validator(),
   run({ theClassId, studentId }) {
     const teacherObject = Teachers.findOne({ teacherId: this.userId });
@@ -100,7 +100,7 @@ export const removeFromClass = new ValidatedMethod({
 export const deleteClass = new ValidatedMethod({
   name: 'classes.deleteClass',
   validate: new SimpleSchema({
-    theClassId: { type: String },
+    theClassId: { type: String, regEx: SimpleSchema.RegEx.Id },
   }).validator(),
   run({ theClassId }) {
     const teacherObject = Teachers.findOne({ teacherId: this.userId });

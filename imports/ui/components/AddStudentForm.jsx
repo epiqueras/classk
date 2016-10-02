@@ -27,9 +27,21 @@ export default class AddStudentForm extends React.Component {
       });
       return;
     }
+    if (firstName.length > 30) {
+      this.setState({
+        errors: { firstName: 'First name may not exceed 30 characters.' },
+      });
+      return;
+    }
     if (!lastName) {
       this.setState({
         errors: { lastName: 'Last name is required.' },
+      });
+      return;
+    }
+    if (lastName.length > 30) {
+      this.setState({
+        errors: { lastName: 'Last name may not exceed 30 characters.' },
       });
       return;
     }
@@ -42,6 +54,12 @@ export default class AddStudentForm extends React.Component {
     if (!grade) {
       this.setState({
         errors: { grade: "The student's grade is required." },
+      });
+      return;
+    }
+    if (grade.length > 15) {
+      this.setState({
+        errors: { grade: 'Grade may not exceed 15 characters.' },
       });
       return;
     }

@@ -43,6 +43,12 @@ export default class HiddenAdminPage extends React.Component {
       });
       return;
     }
+    if (schoolName.length > 30) {
+      this.setState({
+        errors: { schoolName: 'School Name may not exceed 30 characters.' },
+      });
+      return;
+    }
     if (!email) {
       this.setState({
         errors: { email: 'Email Address is required.' },

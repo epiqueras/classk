@@ -26,9 +26,21 @@ export default class AddTeacherForm extends React.Component {
       });
       return;
     }
+    if (firstName.length > 30) {
+      this.setState({
+        errors: { firstName: 'First name may not exceed 30 characters.' },
+      });
+      return;
+    }
     if (!lastName) {
       this.setState({
         errors: { lastName: 'Last name is required.' },
+      });
+      return;
+    }
+    if (lastName.length > 30) {
+      this.setState({
+        errors: { lastName: 'Last name may not exceed 30 characters.' },
       });
       return;
     }

@@ -19,8 +19,8 @@ Assignments.schema = new SimpleSchema({
   teacherId: { type: String, regEx: SimpleSchema.RegEx.Id },
   classId: { type: String, regEx: SimpleSchema.RegEx.Id },
   className: { type: String },
-  title: { type: String },
-  text: { type: String },
+  title: { type: String, max: 30 },
+  text: { type: String, max: 100000 },
   dueDate: { type: Date },
 });
 
@@ -35,4 +35,5 @@ Assignments.publicFields = {
   classId: 1,
   title: 1,
   text: 1,
+  dueDate: 1,
 };

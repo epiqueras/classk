@@ -20,6 +20,7 @@ export default class AddAssignmentForm extends React.Component {
     this.state = {
       errors: {},
       textJson: '',
+      textCount: 0,
       selectedClass: '',
       selectedDate: '',
       selectedTime: '',
@@ -35,59 +36,71 @@ export default class AddAssignmentForm extends React.Component {
     event.preventDefault();
     const target = event.target;
     const title = target.title.value;
+    const theClassId = this.state.selectedClass;
+    const selectedTime = this.state.selectedTime;
+    const dueDate = this.state.selectedDate;
+    const textJson = this.state.textJson;
+    const textCount = this.state.textCount;
     if (!title) {
       this.setState({
         errors: { title: 'Assignment title is required.' },
       });
       return;
     }
-    if (!this.state.selectedClass) {
+    if (title.length > 30) {
+      this.setState({
+        errors: { title: 'Title may not exceed 30 characters.' },
+      });
+      return;
+    }
+    if (!theClassId) {
       Alert.error('Class is required.');
       return;
     }
-    if (!this.state.selectedDate) {
+    if (!dueDate) {
       Alert.error('Due date is required.');
       return;
     }
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    if (this.state.selectedDate < tomorrow) {
+    if (dueDate < tomorrow) {
       Alert.error('Due date has to be at least two nights from now.');
       return;
     }
-    if (!this.state.selectedTime) {
+    if (!selectedTime) {
       Alert.error('Time is required.');
       return;
     }
-    if (!this.state.textJson) {
+    if (!textJson) {
       Alert.error('Text is required.');
       return;
     }
-    const theClassId = this.state.selectedClass;
-    const hours = this.state.selectedTime.getHours();
-    const minutes = this.state.selectedTime.getMinutes();
-    const dueDate = this.state.selectedDate;
+    if (textCount > 10000) {
+      Alert.error('Text may not exceed 10000 characters.');
+      return;
+    }
+    const hours = selectedTime.getHours();
+    const minutes = selectedTime.getMinutes();
     dueDate.setHours(hours);
     dueDate.setMinutes(minutes);
-    const textJson = this.state.textJson;
-    insertNewAssignment.call({ title, theClassId, dueDate, textJson }, (error) => {
+    insertNewAssignment.call({ title, theClassId, dueDate, textJson, textCount }, (error) => {
       if (error) {
         Alert.error(error.reason);
       } else {
         Alert.success('Assignment created successfuly!');
         this.props.toggleForm();
+        target.title.value = '';
+        this.setState({
+          selectedClass: '',
+          selectedDate: '',
+          selectedTime: '',
+        });
       }
-    });
-    target.title.value = '';
-    this.setState({
-      selectedClass: '',
-      selectedDate: '',
-      selectedTime: '',
     });
   }
 
-  getContentJson(jsonString) {
-    this.setState({ textJson: jsonString });
+  getContentJson(jsonString, textLength) {
+    this.setState({ textJson: jsonString, textCount: textLength });
   }
 
   handleClassChange(event, index, value) {

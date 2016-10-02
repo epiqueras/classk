@@ -44,8 +44,8 @@ export const getAppropiateRoute = new ValidatedMethod({
 export const createSchoolUser = new ValidatedMethod({
   name: 'utility.createSchoolUser',
   validate: new SimpleSchema({
-    schoolName: { type: String },
-    email: { type: String },
+    schoolName: { type: String, max: 30 },
+    email: { type: String, regEx: SimpleSchema.RegEx.Email },
   }).validator(),
   run({ email, schoolName }) {
     if (Meteor.isServer) {
@@ -69,9 +69,9 @@ export const createSchoolUser = new ValidatedMethod({
 export const createTeacherUser = new ValidatedMethod({
   name: 'utility.createTeacherUser',
   validate: new SimpleSchema({
-    firstName: { type: String },
-    lastName: { type: String },
-    email: { type: String },
+    firstName: { type: String, max: 30 },
+    lastName: { type: String, max: 30 },
+    email: { type: String, regEx: SimpleSchema.RegEx.Email },
   }).validator(),
   run({ firstName, lastName, email }) {
     if (Meteor.isServer) {
@@ -101,7 +101,7 @@ export const createTeacherUser = new ValidatedMethod({
 export const deleteTeacherUser = new ValidatedMethod({
   name: 'utility.deleteTeacherUser',
   validate: new SimpleSchema({
-    teacherId: { type: String },
+    teacherId: { type: String, regEx: SimpleSchema.RegEx.Id },
   }).validator(),
   run({ teacherId }) {
     if (Meteor.isServer) {
@@ -127,10 +127,10 @@ export const deleteTeacherUser = new ValidatedMethod({
 export const createStudentUser = new ValidatedMethod({
   name: 'utility.createStudentUser',
   validate: new SimpleSchema({
-    firstName: { type: String },
-    lastName: { type: String },
-    email: { type: String },
-    grade: { type: String },
+    firstName: { type: String, max: 30 },
+    lastName: { type: String, max: 30 },
+    email: { type: String, regEx: SimpleSchema.RegEx.Email },
+    grade: { type: String, max: 15 },
   }).validator(),
   run({ firstName, lastName, email, grade }) {
     if (Meteor.isServer) {
@@ -161,7 +161,7 @@ export const createStudentUser = new ValidatedMethod({
 export const deleteStudentUser = new ValidatedMethod({
   name: 'utility.deleteStudentUser',
   validate: new SimpleSchema({
-    studentId: { type: String },
+    studentId: { type: String, regEx: SimpleSchema.RegEx.Id },
   }).validator(),
   run({ studentId }) {
     if (Meteor.isServer) {
