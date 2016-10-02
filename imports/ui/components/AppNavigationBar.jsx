@@ -2,9 +2,11 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router';
+import Badge from 'material-ui/Badge';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
+import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Drawer from 'material-ui/Drawer';
@@ -63,13 +65,35 @@ export default class AppNavigationBar extends React.Component {
 
   render() {
     const NavigationArray = this.props.navigationTabs.map(tab => (
-      <Link to={tab.route} key={tab.name}>
-        <MenuItem
-          primaryText={tab.name}
-          rightIcon={this.getIconElement(tab.iconName)}
-          onTouchTap={this.handleToggle}
-        />
-      </Link>
+      <div key={tab.name} className="row start-xs middle-xs">
+        <div className="col-xs-7">
+          <Link to={tab.route}>
+            <MenuItem
+              primaryText={tab.name}
+              onTouchTap={this.handleToggle}
+              style={{ marginRight: '-16px' }}
+            />
+          </Link>
+        </div>
+        {tab.notifications && tab.notifications !== 0 ?
+          <div className="col-xs-3" style={{ paddingLeft: '6px' }}>
+            <Badge
+              badgeContent={tab.notifications}
+              primary
+            >
+              <Link to={tab.route} onClick={this.handleToggle}>
+                {this.getIconElement(tab.iconName)}
+              </Link>
+            </Badge>
+          </div>
+        :
+          <div className="col-xs-3" style={{ paddingLeft: '6px', marginLeft: '13px' }}>
+            <Link to={tab.route} onClick={this.handleToggle}>
+              {this.getIconElement(tab.iconName)}
+            </Link>
+          </div>
+        }
+      </div>
     ));
 
     return (
@@ -92,11 +116,13 @@ export default class AppNavigationBar extends React.Component {
         />
         <Drawer
           docked={false}
-          width={200}
+          width={185}
           open={this.state.open}
           onRequestChange={(open) => this.setState({ open })}
         >
-          {NavigationArray}
+          <div className="row start-xs middle-xs">
+            <div className="col-xs-12">{NavigationArray}</div>
+          </div>
         </Drawer>
       </div>
     );

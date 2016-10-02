@@ -7,6 +7,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { Classes } from './classes.js';
 import { Teachers } from '../teachers/teachers.js';
+import { Assignments } from '../assignments/assignments.js';
 
 export const insertNewClass = new ValidatedMethod({
   name: 'classes.insertNewClass',
@@ -120,6 +121,7 @@ export const deleteClass = new ValidatedMethod({
         'Only teachers may delete their classes.');
     } else {
       Classes.remove({ _id: theClassId });
+      Assignments.remove({ classId: theClassId });
     }
   },
 });

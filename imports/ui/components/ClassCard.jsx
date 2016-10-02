@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { Link } from 'react-router';
+import Badge from 'material-ui/Badge';
 import Alert from 'react-s-alert';
 import { List } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
@@ -82,10 +83,26 @@ export default class ClassCard extends React.Component {
         />
         <CardActions>
           <Link to={`/teacher/assignments/${theClass._id}`}>
-            <FlatButton label="Assignments" />
+            {this.props.notifications && this.props.notifications !== 0 ?
+              <Badge
+                badgeContent={3}
+                primary
+              >
+                <FlatButton label="Assignments" style={{ margin: '-14px' }} />
+              </Badge>
+            :
+              <FlatButton label="Assignments" style={{ margin: '-14px' }} />
+            }
           </Link>
-          <FlatButton label="Edit Members" onTouchTap={this.toggleCardExpanded} />
-          <IconMenu iconButtonElement={iconButtonElement} style={{ float: 'right' }}>
+          <FlatButton
+            label="Edit Members"
+            onTouchTap={this.toggleCardExpanded}
+            style={{ marginLeft: '-1px' }}
+          />
+          <IconMenu
+            iconButtonElement={iconButtonElement}
+            style={{ position: 'absolute', right: '-14px', bottom: '-4px' }}
+          >
             <MenuItem onTouchTap={this.deleteTheClass}>Confirm Deletion</MenuItem>
           </IconMenu>
         </CardActions>
@@ -111,4 +128,5 @@ export default class ClassCard extends React.Component {
 ClassCard.propTypes = {
   mySchoolStudents: React.PropTypes.array,
   theClass: React.PropTypes.object,
+  notifications: React.PropTypes.number,
 };

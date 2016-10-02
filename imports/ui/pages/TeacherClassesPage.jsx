@@ -44,11 +44,13 @@ export default class TeacherClassesPage extends React.Component {
         this.state.searchValue.toLowerCase()
       )
     )).map(theClass => (
-      <div key={theClass._id} className="col-xs-12 col-sm-6">
+      <div key={theClass._id} className="col-xs-12 col-md-6">
         <ClassCard
           mySchoolStudents={this.context.mySchoolStudents}
           theClass={theClass}
+          notifications={3}
         />
+        <br />
       </div>
     ));
 

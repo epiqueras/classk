@@ -5,9 +5,6 @@ import React from 'react';
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Meteor } from 'meteor/meteor';
 import Alert from 'react-s-alert';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-import customMuiTheme from '../stylesheets/customMuiTheme.jsx';
 import ConnectionNotification from '../components/ConnectionNotification.jsx';
 
 const CONNECTION_ISSUE_TIMEOUT = 5000;
@@ -51,9 +48,7 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <MuiThemeProvider muiTheme={customMuiTheme}>
-          {clonedChildren}
-        </MuiThemeProvider>
+        {clonedChildren}
         {showConnectionIssue && !connected ? <ConnectionNotification /> : null}
         <Alert stack={{ limit: 1 }} offset={64} effect="slide" />
       </div>

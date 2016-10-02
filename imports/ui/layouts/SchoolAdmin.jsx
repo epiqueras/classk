@@ -2,11 +2,15 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Alert from 'react-s-alert';
 
 import LoadingScreen from '../components/LoadingScreen.jsx';
 import AppNavigationBar from '../components/AppNavigationBar.jsx';
+
+import colorPalette from '../stylesheets/colorPalette.jsx';
 
 export default class SchoolAdmin extends React.Component {
   getChildContext() {
@@ -45,6 +49,17 @@ export default class SchoolAdmin extends React.Component {
       location,
     } = this.props;
 
+    const customMuiTheme = getMuiTheme({
+      palette: {
+        primary1Color: colorPalette.primary1Color,
+        primary2Color: colorPalette.primary2Color,
+        primary3Color: colorPalette.primary3Color,
+        accent1Color: colorPalette.accent1Color,
+        textColor: colorPalette.textColor,
+        alternateTextColor: colorPalette.alternateTextColor,
+      },
+    });
+
     // clone route components with keys so that they can have transitions
     const clonedChildren = children && React.cloneElement(children, {
       key: location.pathname,
@@ -61,15 +76,17 @@ export default class SchoolAdmin extends React.Component {
 
     return (
       <div>
-        {this.props.loading ? <LoadingScreen /> :
-          <div>
-            <AppNavigationBar
-              title={title}
-              navigationTabs={AppBarNavigationTabs}
-            />
-            {clonedChildren}
-          </div>
-        }
+        <MuiThemeProvider muiTheme={customMuiTheme}>
+          {this.props.loading ? <LoadingScreen /> :
+            <div>
+              <AppNavigationBar
+                title={title}
+                navigationTabs={AppBarNavigationTabs}
+              />
+              {clonedChildren}
+            </div>
+          }
+        </MuiThemeProvider>
       </div>
     );
   }

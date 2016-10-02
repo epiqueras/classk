@@ -5,6 +5,9 @@ import React from 'react';
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Meteor } from 'meteor/meteor';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import customMuiTheme from '../stylesheets/customMuiTheme.jsx';
 
 import { getAppropiateRoute } from '../../api/methods.js';
 
@@ -53,31 +56,33 @@ export default class Home extends React.Component {
       key: this.props.location.pathname,
     });
     return (
-      <Tabs
-        value={this.state.activeTabValue}
-        onChange={this.handleChange.bind(this)}
-      >
-        <Tab
-          label="Home"
-          value="home"
-          data-route="/"
-          onActive={this.handleActive.bind(this)}
+      <MuiThemeProvider muiTheme={customMuiTheme}>
+        <Tabs
+          value={this.state.activeTabValue}
+          onChange={this.handleChange.bind(this)}
         >
-          <div>
-            {clonedChildren}
-          </div>
-        </Tab>
-        <Tab
-          label="Sign In"
-          value="signin"
-          data-route="/signin"
-          onActive={this.handleActive.bind(this)}
-        >
-          <div>
-            {clonedChildren}
-          </div>
-        </Tab>
-      </Tabs>
+          <Tab
+            label="Home"
+            value="home"
+            data-route="/"
+            onActive={this.handleActive.bind(this)}
+          >
+            <div>
+              {clonedChildren}
+            </div>
+          </Tab>
+          <Tab
+            label="Sign In"
+            value="signin"
+            data-route="/signin"
+            onActive={this.handleActive.bind(this)}
+          >
+            <div>
+              {clonedChildren}
+            </div>
+          </Tab>
+        </Tabs>
+      </MuiThemeProvider>
     );
   }
 }

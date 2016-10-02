@@ -2,11 +2,15 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Alert from 'react-s-alert';
 
 import LoadingScreen from '../components/LoadingScreen.jsx';
 import AppNavigationBar from '../components/AppNavigationBar.jsx';
+
+import colorPalette from '../stylesheets/colorPalette.jsx';
 
 export default class Teacher extends React.Component {
   constructor(props) {
@@ -65,6 +69,17 @@ export default class Teacher extends React.Component {
       location,
     } = this.props;
 
+    const customMuiTheme = getMuiTheme({
+      palette: {
+        primary1Color: colorPalette.primary1Color,
+        primary2Color: colorPalette.primary2Color,
+        primary3Color: colorPalette.primary3Color,
+        accent1Color: colorPalette.accent1Color,
+        textColor: colorPalette.textColor,
+        alternateTextColor: colorPalette.alternateTextColor,
+      },
+    });
+
     // clone route components with keys so that they can have transitions
     const clonedChildren = children && React.cloneElement(children, {
       key: location.pathname,
@@ -72,12 +87,23 @@ export default class Teacher extends React.Component {
 
     const AppBarNavigationTabs = [
       { name: 'Stats', iconName: 'DataUsage', route: '/teacher/stats' },
-      { name: 'Classes', iconName: 'Group', route: '/teacher/classes' },
-      { name: 'Assignments', iconName: 'Assignment', route: '/teacher/assignments' },
+      {
+        name: 'Classes',
+        iconName: 'Group',
+        route: '/teacher/classes',
+        notifications: 0,
+      },
+      {
+        name: 'Assignments',
+        iconName: 'Assignment',
+        route: '/teacher/assignments',
+        notifications: 2,
+      },
     ];
 
     return (
       <div>
+        <MuiThemeProvider muiTheme={customMuiTheme}>
         {this.props.loading ? <LoadingScreen /> :
           <div>
             <AppNavigationBar
@@ -87,6 +113,7 @@ export default class Teacher extends React.Component {
             {clonedChildren}
           </div>
         }
+        </MuiThemeProvider>
       </div>
     );
   }

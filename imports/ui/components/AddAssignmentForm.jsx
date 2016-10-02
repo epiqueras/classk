@@ -147,7 +147,7 @@ export default class AddAssignmentForm extends React.Component {
           <Paper zDepth={1}>
             <form onChange={(e) => { e.stopPropagation(); }} onSubmit={this.onSubmit}>
               <div className="row center-xs middle-xs around-xs">
-                <div className="col-xs-6">
+                <div className="col-xs-12 col-sm-6">
                   <TextField
                     name="title"
                     type="text"
@@ -156,7 +156,7 @@ export default class AddAssignmentForm extends React.Component {
                     errorText={this.state.errors.title}
                   />
                 </div>
-                <div className="col-xs-6">
+                <div className="col-xs-12 col-sm-6">
                   <SelectField
                     value={this.state.selectedClass}
                     onChange={this.handleClassChange}
@@ -166,14 +166,14 @@ export default class AddAssignmentForm extends React.Component {
                     {theClassesList}
                   </SelectField>
                 </div>
-                <div className="col-xs-6">
+                <div className="col-xs-12 col-sm-6">
                   <DatePicker
                     hintText="Select a due date"
                     value={selectedDate}
                     onChange={this.handleDateChange}
                   />
                 </div>
-                <div className="col-xs-6">
+                <div className="col-xs-12 col-sm-6">
                   <TimePicker
                     format="24hr"
                     hintText="Select a time"

@@ -73,6 +73,7 @@ export default class TeacherAssignmentsPage extends React.Component {
                   assignments={this.props.myAssignments}
                   classId={this.props.classId}
                   myClasses={this.props.myClasses}
+                  notifications={3}
                 />
               </div>
             </div>

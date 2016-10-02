@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
+import Badge from 'material-ui/Badge';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import { List, ListItem } from 'material-ui/List';
@@ -10,7 +11,10 @@ import Avatar from 'material-ui/Avatar';
 import Assignment from 'material-ui/svg-icons/action/assignment';
 import AssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 
+import colorPalette from '../stylesheets/colorPalette.jsx';
+
 // TODO:
+// Implement color customization.
 // Start working on questions.
 
 export default class AssignmentsList extends React.Component {
@@ -73,9 +77,9 @@ export default class AssignmentsList extends React.Component {
       }
       let className = '';
       if (!this.props.classId) {
-        className = this.props.myClasses.filter(theClass => (
+        className = this.props.myClasses.find(theClass => (
           theClass._id === assignment.classId
-        ))[0].name;
+        )).name;
         className = ` (${className})`;
       }
       return (
@@ -83,10 +87,16 @@ export default class AssignmentsList extends React.Component {
           {divider}
           <ListItem
             key={assignment._id}
-            leftAvatar={<Avatar icon={<Assignment />} backgroundColor={'#00BCD4'} />}
-            rightIcon={<QuestionAnswer />}
+            leftAvatar={<Avatar icon={<Assignment />} backgroundColor={colorPalette.accent1Color} />}
+            rightIcon={this.props.notifications && this.props.notifications !== 0 ?
+              <Badge badgeContent={3} primary style={{ top: '0px' }}>
+                <QuestionAnswer />
+              </Badge>
+            :
+              <QuestionAnswer />
+            }
             primaryText={assignment.title + className}
-            secondaryText={`Due Date: ${dueDate.toString()}`}
+            secondaryText={`Time: ${dueDate.toString().slice(16)}`}
           />
         </div>
       );
@@ -119,9 +129,9 @@ export default class AssignmentsList extends React.Component {
       }
       let className = '';
       if (!this.props.classId) {
-        className = this.props.myClasses.filter(theClass => (
+        className = this.props.myClasses.find(theClass => (
           theClass._id === assignment.classId
-        ))[0].name;
+        )).name;
         className = ` (${className})`;
       }
       return (
@@ -129,8 +139,14 @@ export default class AssignmentsList extends React.Component {
           {divider}
           <ListItem
             key={assignment._id}
-            leftAvatar={<Avatar icon={<AssignmentTurnedIn />} backgroundColor={'#00BCD4'} />}
-            rightIcon={<QuestionAnswer />}
+            leftAvatar={<Avatar icon={<AssignmentTurnedIn />} backgroundColor={colorPalette.accent1Color} />}
+            rightIcon={this.props.notifications && this.props.notifications !== 0 ?
+              <Badge badgeContent={3} primary style={{ top: '0px' }}>
+                <QuestionAnswer />
+              </Badge>
+            :
+              <QuestionAnswer />
+            }
             primaryText={assignment.title + className}
             secondaryText={`Due Date: ${dueDate.toString()}`}
           />
@@ -171,13 +187,13 @@ export default class AssignmentsList extends React.Component {
             icon={<Assignment />}
             label="Open"
             value={0}
-            style={{ backgroundColor: '#3F51B5' }}
+            style={{ backgroundColor: colorPalette.primary2Color }}
           />
           <Tab
             icon={<AssignmentTurnedIn />}
             label="Closed"
             value={1}
-            style={{ backgroundColor: '#3F51B5' }}
+            style={{ backgroundColor: colorPalette.primary2Color }}
           />
         </Tabs>
         <SwipeableViews
@@ -204,6 +220,7 @@ AssignmentsList.propTypes = {
   assignments: React.PropTypes.array,
   classId: React.PropTypes.string,
   myClasses: React.PropTypes.array,
+  notifications: React.PropTypes.number,
 };
 
 AssignmentsList.contextTypes = {
