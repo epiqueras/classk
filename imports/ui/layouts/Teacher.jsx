@@ -23,6 +23,7 @@ export default class Teacher extends React.Component {
     return {
       mySchoolStudents: this.props.mySchoolStudents,
       changeNavbarText: this.changeNavbarText,
+      myColors: this.props.myColors,
     };
   }
 
@@ -67,14 +68,15 @@ export default class Teacher extends React.Component {
       myTeacherObject,
       children,
       location,
+      myColors,
     } = this.props;
 
     const customMuiTheme = getMuiTheme({
       palette: {
-        primary1Color: colorPalette.primary1Color,
-        primary2Color: colorPalette.primary2Color,
-        primary3Color: colorPalette.primary3Color,
-        accent1Color: colorPalette.accent1Color,
+        primary1Color: myColors.primary1Color,
+        primary2Color: myColors.primary2Color,
+        primary3Color: myColors.primary3Color,
+        accent1Color: myColors.accent1Color,
         textColor: colorPalette.textColor,
         alternateTextColor: colorPalette.alternateTextColor,
       },
@@ -124,6 +126,7 @@ export default class Teacher extends React.Component {
 Teacher.propTypes = {
   user: React.PropTypes.object,
   loading: React.PropTypes.bool,
+  myColors: React.PropTypes.object,
   myTeacherObject: React.PropTypes.object,
   mySchoolStudents: React.PropTypes.array,
   children: React.PropTypes.element, // matched child route component
@@ -138,4 +141,5 @@ Teacher.contextTypes = {
 Teacher.childContextTypes = {
   mySchoolStudents: React.PropTypes.array,
   changeNavbarText: React.PropTypes.func,
+  myColors: React.PropTypes.object,
 };

@@ -1,8 +1,6 @@
 import React from 'react';
 import ProgressBar from 'react-progressbar.js';
 
-import colorPalette from '../stylesheets/colorPalette.jsx';
-
 export default class TeacherStatsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -28,8 +26,8 @@ export default class TeacherStatsPage extends React.Component {
         autoStyleContainer: true,
         size: 250,
       },
-      from: { color: colorPalette.accent1Color, width: 1 },
-      to: { color: colorPalette.primary2Color, width: 4 },
+      from: { color: this.context.myColors.accent1Color, width: 1 },
+      to: { color: this.context.myColors.primary2Color, width: 4 },
       // Set default step function for all animate calls
       step: (state, circle) => {
         circle.path.setAttribute('stroke', state.color);
@@ -74,4 +72,5 @@ export default class TeacherStatsPage extends React.Component {
 }
 
 TeacherStatsPage.contextTypes = {
+  myColors: React.PropTypes.object,
 };

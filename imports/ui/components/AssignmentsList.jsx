@@ -11,10 +11,8 @@ import Avatar from 'material-ui/Avatar';
 import Assignment from 'material-ui/svg-icons/action/assignment';
 import AssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 
-import colorPalette from '../stylesheets/colorPalette.jsx';
-
 // TODO:
-// Implement color customization.
+// Implement color customization UI.
 // Start working on questions.
 
 export default class AssignmentsList extends React.Component {
@@ -87,7 +85,9 @@ export default class AssignmentsList extends React.Component {
           {divider}
           <ListItem
             key={assignment._id}
-            leftAvatar={<Avatar icon={<Assignment />} backgroundColor={colorPalette.accent1Color} />}
+            leftAvatar={
+              <Avatar icon={<Assignment />} backgroundColor={this.context.myColors.accent1Color} />
+            }
             rightIcon={this.props.notifications && this.props.notifications !== 0 ?
               <Badge badgeContent={3} primary style={{ top: '0px' }}>
                 <QuestionAnswer />
@@ -139,7 +139,9 @@ export default class AssignmentsList extends React.Component {
           {divider}
           <ListItem
             key={assignment._id}
-            leftAvatar={<Avatar icon={<AssignmentTurnedIn />} backgroundColor={colorPalette.accent1Color} />}
+            leftAvatar={
+              <Avatar icon={<AssignmentTurnedIn />} backgroundColor={this.context.myColors.accent1Color} />
+            }
             rightIcon={this.props.notifications && this.props.notifications !== 0 ?
               <Badge badgeContent={3} primary style={{ top: '0px' }}>
                 <QuestionAnswer />
@@ -187,13 +189,13 @@ export default class AssignmentsList extends React.Component {
             icon={<Assignment />}
             label="Open"
             value={0}
-            style={{ backgroundColor: colorPalette.primary2Color }}
+            style={{ backgroundColor: this.context.myColors.primary2Color }}
           />
           <Tab
             icon={<AssignmentTurnedIn />}
             label="Closed"
             value={1}
-            style={{ backgroundColor: colorPalette.primary2Color }}
+            style={{ backgroundColor: this.context.myColors.primary2Color }}
           />
         </Tabs>
         <SwipeableViews
@@ -224,4 +226,5 @@ AssignmentsList.propTypes = {
 };
 
 AssignmentsList.contextTypes = {
+  myColors: React.PropTypes.object,
 };

@@ -6,7 +6,6 @@ import Badge from 'material-ui/Badge';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
-import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Drawer from 'material-ui/Drawer';

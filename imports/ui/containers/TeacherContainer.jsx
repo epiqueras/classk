@@ -12,6 +12,12 @@ export default createContainer(() => { // eslint-disable-line arrow-body-style
   return {
     user: Meteor.user(),
     loading: !(myTeacherObjectHandle.ready() && mySchoolStudentsHandle.ready()),
+    myColors: {
+      primary1Color: '#303F9F',
+      primary2Color: '#3F51B5',
+      primary3Color: '#C5CAE9',
+      accent1Color: '#00BCD4',
+    },
     myTeacherObject: Teachers.findOne({ teacherId: Meteor.userId() }),
     mySchoolStudents: Students.find({}).fetch(),
   };

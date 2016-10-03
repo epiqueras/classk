@@ -13,8 +13,23 @@ import AppNavigationBar from '../components/AppNavigationBar.jsx';
 import colorPalette from '../stylesheets/colorPalette.jsx';
 
 export default class SchoolAdmin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      slideIndex: 0,
+      testColors: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.setTestColors = this.setTestColors.bind(this);
+  }
+
   getChildContext() {
-    return { myTeachers: this.props.myTeachers, myStudents: this.props.myStudents };
+    return {
+      myTeachers: this.props.myTeachers,
+      myStudents: this.props.myStudents,
+      myColors: this.props.myColors,
+      setTestColors: this.setTestColors,
+    };
   }
 
   componentWillMount() {
@@ -43,22 +58,42 @@ export default class SchoolAdmin extends React.Component {
     }
   }
 
+  setTestColors(colors) {
+    this.setState({ testColors: colors });
+  }
+
   render() {
     const {
       children,
       location,
+      myColors,
     } = this.props;
+    const testColors = this.state.testColors;
 
-    const customMuiTheme = getMuiTheme({
-      palette: {
-        primary1Color: colorPalette.primary1Color,
-        primary2Color: colorPalette.primary2Color,
-        primary3Color: colorPalette.primary3Color,
-        accent1Color: colorPalette.accent1Color,
-        textColor: colorPalette.textColor,
-        alternateTextColor: colorPalette.alternateTextColor,
-      },
-    });
+    let customMuiTheme;
+    if (!testColors) {
+      customMuiTheme = getMuiTheme({
+        palette: {
+          primary1Color: myColors.primary1Color,
+          primary2Color: myColors.primary2Color,
+          primary3Color: myColors.primary3Color,
+          accent1Color: myColors.accent1Color,
+          textColor: colorPalette.textColor,
+          alternateTextColor: colorPalette.alternateTextColor,
+        },
+      });
+    } else {
+      customMuiTheme = getMuiTheme({
+        palette: {
+          primary1Color: testColors.primary1Color,
+          primary2Color: testColors.primary2Color,
+          primary3Color: testColors.primary3Color,
+          accent1Color: testColors.accent1Color,
+          textColor: colorPalette.textColor,
+          alternateTextColor: colorPalette.alternateTextColor,
+        },
+      });
+    }
 
     // clone route components with keys so that they can have transitions
     const clonedChildren = children && React.cloneElement(children, {
@@ -96,6 +131,7 @@ export default class SchoolAdmin extends React.Component {
 
 SchoolAdmin.propTypes = {
   loading: React.PropTypes.bool,
+  myColors: React.PropTypes.object,
   mySchool: React.PropTypes.array,
   myTeachers: React.PropTypes.array,
   myStudents: React.PropTypes.array,
@@ -111,4 +147,6 @@ SchoolAdmin.contextTypes = {
 SchoolAdmin.childContextTypes = {
   myTeachers: React.PropTypes.array,
   myStudents: React.PropTypes.array,
+  myColors: React.PropTypes.object,
+  setTestColors: React.PropTypes.func,
 };
