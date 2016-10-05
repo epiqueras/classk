@@ -12,7 +12,7 @@ import Avatar from 'material-ui/Avatar';
 import Assignment from 'material-ui/svg-icons/action/assignment';
 import AssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 
-export default class TeacherAssignmentsList extends React.Component {
+export default class StudentAssignmentsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -225,14 +225,14 @@ export default class TeacherAssignmentsList extends React.Component {
   }
 }
 
-TeacherAssignmentsList.propTypes = {
+StudentAssignmentsList.propTypes = {
   assignments: React.PropTypes.array,
   classId: React.PropTypes.string,
   myClasses: React.PropTypes.array,
   notifications: React.PropTypes.number,
 };
 
-TeacherAssignmentsList.contextTypes = {
+StudentAssignmentsList.contextTypes = {
   router: React.PropTypes.object,
   myColors: React.PropTypes.object,
 };

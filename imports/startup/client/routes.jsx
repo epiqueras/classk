@@ -26,7 +26,7 @@ import TeacherClassesPageContainer from '../../ui/containers/TeacherClassesPageC
 import TeacherAssignmentsPageContainer
   from '../../ui/containers/TeacherAssignmentsPageContainer.jsx';
 
-import AssignmentPageContainer from '../../ui/containers/AssignmentPageContainer.jsx';
+import TeacherAssignmentPageContainer from '../../ui/containers/TeacherAssignmentPageContainer.jsx';
 
 import NotFoundPage from '../../ui/pages/NotFoundPage.jsx';
 
@@ -62,8 +62,12 @@ export const renderRoutes = () => ( // eslint-disable-line import/prefer-default
         <IndexRedirect to="stats" />
         <Route path="stats" component={TeacherStatsPage} />
         <Route path="classes" component={TeacherClassesPageContainer} />
-        <Route path="assignments(/:classId)" component={TeacherAssignmentsPageContainer} />
-        <Route path="questions/:assignmentId" component={AssignmentPageContainer} />
+        <Route path="assignments(/:classId)" component={TeacherAssignmentsPageContainer}>
+          <Route
+            path="/teacher/questions/:assignmentId"
+            component={TeacherAssignmentPageContainer}
+          />
+        </Route>
       </Route>
       <Route path="hidden-admin" component={HiddenAdminPage} />
       <Route path="404" component={NotFoundPage} />

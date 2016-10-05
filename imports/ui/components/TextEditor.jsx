@@ -8,7 +8,7 @@ import ReactQuill from 'react-quill';
 export default class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { editorContent: '' };
+    this.state = { editorContent: '', initialMount: false };
     this.onTextChange = this.onTextChange.bind(this);
     this._quillModules = {
       formula: true,
@@ -31,6 +31,18 @@ export default class TextEditor extends React.Component {
       'formula', 'code-block',
       'link',
     ];
+  }
+
+  componentDidMount() {
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ initialMount: true });
+  }
+
+  componentDidUpdate() {
+    if (this.props.contentJson && this.state.initialMount) {
+      this.refs.quillRef.getEditor().setContents(JSON.parse(this.props.contentJson));
+      this.setState({ initialMount: false });
+    }
   }
 
   onTextChange(value) {
@@ -68,4 +80,5 @@ export default class TextEditor extends React.Component {
 
 TextEditor.propTypes = {
   getContentJson: React.PropTypes.func,
+  contentJson: React.PropTypes.string,
 };

@@ -10,6 +10,7 @@ export default createContainer(() => { // eslint-disable-line arrow-body-style
   const mySchoolHandle = Meteor.subscribe('schools.teacherMySchool');
   const myTeacherObjectHandle = Meteor.subscribe('teachers.myTeacherObject');
   const mySchoolStudentsHandle = Meteor.subscribe('students.mySchoolStudents');
+  const myClassesHandle = Meteor.subscribe('classes.classesITeach');
   return {
     user: Meteor.user(),
     loading: !(myTeacherObjectHandle.ready()

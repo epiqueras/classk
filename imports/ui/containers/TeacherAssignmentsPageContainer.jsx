@@ -7,10 +7,9 @@ import TeacherAssignmentsPage from '../pages/TeacherAssignmentsPage.jsx';
 
 export default createContainer(({ params: { classId } }) => {
   const myAssignmentsHandle = Meteor.subscribe('assignments.assignmentsISet');
-  const myClassesHandle = Meteor.subscribe('classes.classesITeach');
   return {
     user: Meteor.user(),
-    loading: !(myAssignmentsHandle.ready() && myClassesHandle.ready()),
+    loading: !(myAssignmentsHandle.ready()),
     myAssignments: Assignments.find({ teacherId: Meteor.userId() }).fetch(),
     myClasses: Classes.find({ teacherId: Meteor.userId() }).fetch(),
     classId,

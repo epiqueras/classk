@@ -41,40 +41,51 @@ export default class TeacherAssignmentsPage extends React.Component {
   }
 
   render() {
+    const clonedChildren = this.props.children && React.cloneElement(this.props.children, {
+      key: this.props.location.pathname,
+    });
+    let display;
+    if (!clonedChildren) {
+      display = (
+        <div>
+          <div className="row">
+            <div className="col-xs-12">
+              <RaisedButton
+                label="Set Assignment"
+                icon={<AssignmentReturned />}
+                onClick={this.toggleForm}
+                fullWidth
+                secondary
+              />
+            </div>
+            <div className="col-xs-12">
+              <AddAssignmentForm
+                createFormOpen={this.state.createButtonToggled}
+                toggleForm={this.toggleForm}
+                classId={this.props.classId}
+                myClasses={this.props.myClasses}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-12">
+              <TeacherAssignmentsList
+                assignments={this.props.myAssignments}
+                classId={this.props.classId}
+                myClasses={this.props.myClasses}
+                notifications={3}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      display = clonedChildren;
+    }
     return (
       <div>
         {this.props.loading ? <LoadingScreen /> :
-          <div>
-            <div className="row">
-              <div className="col-xs-12">
-                <RaisedButton
-                  label="Set Assignment"
-                  icon={<AssignmentReturned />}
-                  onClick={this.toggleForm}
-                  fullWidth
-                  secondary
-                />
-              </div>
-              <div className="col-xs-12">
-                <AddAssignmentForm
-                  createFormOpen={this.state.createButtonToggled}
-                  toggleForm={this.toggleForm}
-                  classId={this.props.classId}
-                  myClasses={this.props.myClasses}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-xs-12">
-                <TeacherAssignmentsList
-                  assignments={this.props.myAssignments}
-                  classId={this.props.classId}
-                  myClasses={this.props.myClasses}
-                  notifications={3}
-                />
-              </div>
-            </div>
-          </div>
+          <div>{display}</div>
         }
       </div>
     );
