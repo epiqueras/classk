@@ -14,7 +14,7 @@ import Assignment from 'material-ui/svg-icons/action/assignment';
 import DataUsage from 'material-ui/svg-icons/device/data-usage';
 import Book from 'material-ui/svg-icons/action/book';
 import School from 'material-ui/svg-icons/social/school';
-import Payment from 'material-ui/svg-icons/action/payment';
+import ColorLens from 'material-ui/svg-icons/image/color-lens';
 // import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 export default class AppNavigationBar extends React.Component {
@@ -39,8 +39,8 @@ export default class AppNavigationBar extends React.Component {
         return <Book />;
       case 'School':
         return <School />;
-      case 'Payment':
-        return <Payment />;
+      case 'ColorLens':
+        return <ColorLens />;
       default:
         return null;
     }

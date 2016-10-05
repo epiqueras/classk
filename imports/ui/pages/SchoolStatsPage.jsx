@@ -99,6 +99,7 @@ export default class SchoolStatsPage extends React.Component {
                     progress={this.state.completed / 100}
                     options={answeredWheelOptions}
                     initialAnimate
+                    containerStyle={{ fontSize: '8rem' }}
                   />
                 </div>
                 <div className="col-xs-4 col-md-3">

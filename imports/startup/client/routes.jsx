@@ -18,13 +18,15 @@ import SchoolAdminContainer from '../../ui/containers/SchoolAdminContainer.jsx';
 import SchoolStatsPage from '../../ui/pages/SchoolStatsPage.jsx';
 import SchoolTeachersPage from '../../ui/pages/SchoolTeachersPage.jsx';
 import SchoolStudentsPage from '../../ui/pages/SchoolStudentsPage.jsx';
-import SchoolPaymentPage from '../../ui/pages/SchoolPaymentPage.jsx';
+import SchoolColorPickerPage from '../../ui/pages/SchoolColorPickerPage.jsx';
 
 import TeacherContainer from '../../ui/containers/TeacherContainer.jsx';
 import TeacherStatsPage from '../../ui/pages/TeacherStatsPage.jsx';
 import TeacherClassesPageContainer from '../../ui/containers/TeacherClassesPageContainer.jsx';
 import TeacherAssignmentsPageContainer
   from '../../ui/containers/TeacherAssignmentsPageContainer.jsx';
+
+import AssignmentPageContainer from '../../ui/containers/AssignmentPageContainer.jsx';
 
 import NotFoundPage from '../../ui/pages/NotFoundPage.jsx';
 
@@ -54,13 +56,14 @@ export const renderRoutes = () => ( // eslint-disable-line import/prefer-default
         <Route path="stats" component={SchoolStatsPage} />
         <Route path="teachers" component={SchoolTeachersPage} />
         <Route path="students" component={SchoolStudentsPage} />
-        <Route path="plan-payment" component={SchoolPaymentPage} />
+        <Route path="color-picker" component={SchoolColorPickerPage} />
       </Route>
       <Route path="teacher" component={TeacherContainer}>
         <IndexRedirect to="stats" />
         <Route path="stats" component={TeacherStatsPage} />
         <Route path="classes" component={TeacherClassesPageContainer} />
         <Route path="assignments(/:classId)" component={TeacherAssignmentsPageContainer} />
+        <Route path="questions/:assignmentId" component={AssignmentPageContainer} />
       </Route>
       <Route path="hidden-admin" component={HiddenAdminPage} />
       <Route path="404" component={NotFoundPage} />

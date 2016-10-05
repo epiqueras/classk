@@ -23,3 +23,7 @@ import '../../api/classes/server/publications.js';
 // assignments
 import '../../api/assignments/methods.js';
 import '../../api/assignments/server/publications.js';
+
+// questions
+import '../../api/questions/methods.js';
+import '../../api/questions/server/publications.js';

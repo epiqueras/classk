@@ -5,7 +5,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { Teachers } from '../../teachers/teachers.js';
 import { Classes } from '../classes.js';
 
-Meteor.publish('classes.classesITeach', function publishMySchoolStudents() {
+Meteor.publish('classes.classesITeach', function publishClassesITeach() {
   const teacherObject = Teachers.findOne({ teacherId: this.userId });
   if (!teacherObject) {
     this.stop();

@@ -4,11 +4,8 @@ import AssignmentReturned from 'material-ui/svg-icons/action/assignment-returned
 import RaisedButton from 'material-ui/RaisedButton';
 
 import LoadingScreen from '../components/LoadingScreen.jsx';
-import AssignmentsList from '../components/AssignmentsList.jsx';
+import TeacherAssignmentsList from '../components/TeacherAssignmentsList.jsx';
 import AddAssignmentForm from '../components/AddAssignmentForm.jsx';
-
-// TODO:
-// Show assignments in list.
 
 export default class TeacherAssignmentsPage extends React.Component {
   constructor(props) {
@@ -27,14 +24,14 @@ export default class TeacherAssignmentsPage extends React.Component {
       ));
       if (className.length === 0) {
         className = 'All Classes';
-        if (this.props.classId) {
+        if (!this.props.loading && this.props.classId) {
           this.context.router.replace('/teacher/classes');
         }
       } else {
         className = className[0].name;
       }
     }
-    this.context.changeNavbarText(` - Assignments for ${className}`);
+    this.context.changeNavbarText(`Class: ${className}`);
   }
 
   toggleForm() {
@@ -69,7 +66,7 @@ export default class TeacherAssignmentsPage extends React.Component {
             </div>
             <div className="row">
               <div className="col-xs-12">
-                <AssignmentsList
+                <TeacherAssignmentsList
                   assignments={this.props.myAssignments}
                   classId={this.props.classId}
                   myClasses={this.props.myClasses}
@@ -85,6 +82,7 @@ export default class TeacherAssignmentsPage extends React.Component {
 }
 
 TeacherAssignmentsPage.propTypes = {
+  children: React.PropTypes.element,
   loading: React.PropTypes.bool,
   myAssignments: React.PropTypes.array,
   myClasses: React.PropTypes.array,

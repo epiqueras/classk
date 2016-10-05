@@ -23,7 +23,7 @@ export default class Teacher extends React.Component {
     return {
       mySchoolStudents: this.props.mySchoolStudents,
       changeNavbarText: this.changeNavbarText,
-      myColors: this.props.myColors,
+      myColors: this.props.myColors ? this.props.myColors.colors : {},
     };
   }
 
@@ -68,19 +68,33 @@ export default class Teacher extends React.Component {
       myTeacherObject,
       children,
       location,
-      myColors,
     } = this.props;
+    const myColors = this.props.myColors ? this.props.myColors.colors : '';
 
-    const customMuiTheme = getMuiTheme({
-      palette: {
-        primary1Color: myColors.primary1Color,
-        primary2Color: myColors.primary2Color,
-        primary3Color: myColors.primary3Color,
-        accent1Color: myColors.accent1Color,
-        textColor: colorPalette.textColor,
-        alternateTextColor: colorPalette.alternateTextColor,
-      },
-    });
+    let customMuiTheme;
+    if (myColors) {
+      customMuiTheme = getMuiTheme({
+        palette: {
+          primary1Color: myColors.primary1Color,
+          primary2Color: myColors.primary2Color,
+          primary3Color: myColors.primary3Color,
+          accent1Color: myColors.accent1Color,
+          textColor: colorPalette.textColor,
+          alternateTextColor: colorPalette.alternateTextColor,
+        },
+      });
+    } else {
+      customMuiTheme = getMuiTheme({
+        palette: {
+          primary1Color: colorPalette.primary1Color,
+          primary2Color: colorPalette.primary2Color,
+          primary3Color: colorPalette.primary3Color,
+          accent1Color: colorPalette.accent1Color,
+          textColor: colorPalette.textColor,
+          alternateTextColor: colorPalette.alternateTextColor,
+        },
+      });
+    }
 
     // clone route components with keys so that they can have transitions
     const clonedChildren = children && React.cloneElement(children, {
@@ -109,7 +123,7 @@ export default class Teacher extends React.Component {
         {this.props.loading ? <LoadingScreen /> :
           <div>
             <AppNavigationBar
-              title={myTeacherObject.firstName + this.state.navbarText}
+              title={this.state.navbarText ? this.state.navbarText : myTeacherObject.firstName}
               navigationTabs={AppBarNavigationTabs}
             />
             {clonedChildren}
@@ -120,8 +134,6 @@ export default class Teacher extends React.Component {
     );
   }
 }
-
-// <div>{this.props.loading ? 'LOADING' : 'DONE LOADING'}</div>
 
 Teacher.propTypes = {
   user: React.PropTypes.object,

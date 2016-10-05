@@ -17,18 +17,20 @@ export default class SchoolAdmin extends React.Component {
     super(props);
     this.state = {
       slideIndex: 0,
-      testColors: '',
+      testPrimaryColors: '',
+      testAccentColor: '',
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.setTestColors = this.setTestColors.bind(this);
+    this.setTestPrimaryColors = this.setTestPrimaryColors.bind(this);
+    this.setTestAccentColor = this.setTestAccentColor.bind(this);
   }
 
   getChildContext() {
     return {
       myTeachers: this.props.myTeachers,
       myStudents: this.props.myStudents,
-      myColors: this.props.myColors,
-      setTestColors: this.setTestColors,
+      myColors: this.props.myColors ? this.props.myColors.colors : {},
+      setTestPrimaryColors: this.setTestPrimaryColors,
+      setTestAccentColor: this.setTestAccentColor,
     };
   }
 
@@ -58,20 +60,25 @@ export default class SchoolAdmin extends React.Component {
     }
   }
 
-  setTestColors(colors) {
-    this.setState({ testColors: colors });
+  setTestPrimaryColors(colors) {
+    this.setState({ testPrimaryColors: colors });
+  }
+
+  setTestAccentColor(color) {
+    this.setState({ testAccentColor: color });
   }
 
   render() {
     const {
       children,
       location,
-      myColors,
     } = this.props;
-    const testColors = this.state.testColors;
+    const myColors = this.props.myColors ? this.props.myColors.colors : '';
+    const testPrimaryColors = this.state.testPrimaryColors;
+    const testAccentColor = this.state.testAccentColor;
 
     let customMuiTheme;
-    if (!testColors) {
+    if (!testPrimaryColors && !testAccentColor && myColors) {
       customMuiTheme = getMuiTheme({
         palette: {
           primary1Color: myColors.primary1Color,
@@ -82,13 +89,46 @@ export default class SchoolAdmin extends React.Component {
           alternateTextColor: colorPalette.alternateTextColor,
         },
       });
+    } else if (!testPrimaryColors && myColors) {
+      customMuiTheme = getMuiTheme({
+        palette: {
+          primary1Color: myColors.primary1Color,
+          primary2Color: myColors.primary2Color,
+          primary3Color: myColors.primary3Color,
+          accent1Color: testAccentColor,
+          textColor: colorPalette.textColor,
+          alternateTextColor: colorPalette.alternateTextColor,
+        },
+      });
+    } else if (!testAccentColor && myColors) {
+      customMuiTheme = getMuiTheme({
+        palette: {
+          primary1Color: testPrimaryColors.primary1Color,
+          primary2Color: testPrimaryColors.primary2Color,
+          primary3Color: testPrimaryColors.primary3Color,
+          accent1Color: myColors.accent1Color,
+          textColor: colorPalette.textColor,
+          alternateTextColor: colorPalette.alternateTextColor,
+        },
+      });
+    } else if (myColors) {
+      customMuiTheme = getMuiTheme({
+        palette: {
+          primary1Color: testPrimaryColors.primary1Color,
+          primary2Color: testPrimaryColors.primary2Color,
+          primary3Color: testPrimaryColors.primary3Color,
+          accent1Color: testAccentColor,
+          textColor: colorPalette.textColor,
+          alternateTextColor: colorPalette.alternateTextColor,
+        },
+      });
     } else {
       customMuiTheme = getMuiTheme({
         palette: {
-          primary1Color: testColors.primary1Color,
-          primary2Color: testColors.primary2Color,
-          primary3Color: testColors.primary3Color,
-          accent1Color: testColors.accent1Color,
+          primary1Color: colorPalette.primary1Color,
+          primary2Color: colorPalette.primary2Color,
+          primary3Color: colorPalette.primary3Color,
+          accent1Color: colorPalette.accent1Color,
           textColor: colorPalette.textColor,
           alternateTextColor: colorPalette.alternateTextColor,
         },
@@ -104,10 +144,10 @@ export default class SchoolAdmin extends React.Component {
       { name: 'Stats', iconName: 'DataUsage', route: '/school-admin/stats' },
       { name: 'Teachers', iconName: 'Book', route: '/school-admin/teachers' },
       { name: 'Students', iconName: 'School', route: '/school-admin/students' },
-      { name: 'Plan & Payment', iconName: 'Payment', route: '/school-admin/plan-payment' },
+      { name: 'Colors', iconName: 'ColorLens', route: '/school-admin/color-picker' },
     ];
 
-    const title = this.props.mySchool[0] ? this.props.mySchool[0].schoolName : 'Loading...';
+    const title = this.props.mySchool ? this.props.mySchool.schoolName : 'Loading...';
 
     return (
       <div>
@@ -132,7 +172,7 @@ export default class SchoolAdmin extends React.Component {
 SchoolAdmin.propTypes = {
   loading: React.PropTypes.bool,
   myColors: React.PropTypes.object,
-  mySchool: React.PropTypes.array,
+  mySchool: React.PropTypes.object,
   myTeachers: React.PropTypes.array,
   myStudents: React.PropTypes.array,
   children: React.PropTypes.element, // matched child route component
@@ -148,5 +188,6 @@ SchoolAdmin.childContextTypes = {
   myTeachers: React.PropTypes.array,
   myStudents: React.PropTypes.array,
   myColors: React.PropTypes.object,
-  setTestColors: React.PropTypes.func,
+  setTestPrimaryColors: React.PropTypes.func,
+  setTestAccentColor: React.PropTypes.func,
 };

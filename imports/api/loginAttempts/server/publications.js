@@ -3,7 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { LoginAttempts } from '../loginAttempts.js';
 
-Meteor.publish('loginAttempts.public', function loginAttemptsPublic() {
+Meteor.publish('loginAttempts.public', function publishMyLoginAttempts() {
   return LoginAttempts.find({
     clientAddress: this.connection.clientAdress,
   }, {

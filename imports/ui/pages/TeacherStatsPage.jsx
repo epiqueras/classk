@@ -73,4 +73,5 @@ export default class TeacherStatsPage extends React.Component {
 
 TeacherStatsPage.contextTypes = {
   myColors: React.PropTypes.object,
+  changeNavbarText: React.PropTypes.func,
 };

@@ -22,9 +22,6 @@ LoginAttempts.schema = new SimpleSchema({
 
 LoginAttempts.attachSchema(LoginAttempts.schema);
 
-// This represents the keys from Lists objects that should be published
-// to the client. If we add secret properties to List objects, don't list
-// them here to keep them private to the server.
 LoginAttempts.publicFields = {
   unsuccessfulAttempts: 1,
   lastFailAt: 1,

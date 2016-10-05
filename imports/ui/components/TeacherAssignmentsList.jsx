@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
+import { Link } from 'react-router';
 import Badge from 'material-ui/Badge';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
@@ -12,10 +13,9 @@ import Assignment from 'material-ui/svg-icons/action/assignment';
 import AssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 
 // TODO:
-// Implement color customization UI.
 // Start working on questions.
 
-export default class AssignmentsList extends React.Component {
+export default class TeacherAssignmentsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,21 +83,26 @@ export default class AssignmentsList extends React.Component {
       return (
         <div key={assignment._id}>
           {divider}
-          <ListItem
-            key={assignment._id}
-            leftAvatar={
-              <Avatar icon={<Assignment />} backgroundColor={this.context.myColors.accent1Color} />
-            }
-            rightIcon={this.props.notifications && this.props.notifications !== 0 ?
-              <Badge badgeContent={3} primary style={{ top: '0px' }}>
+          <Link to={`/teacher/questions/${assignment._id}`}>
+            <ListItem
+              key={assignment._id}
+              leftAvatar={
+                <Avatar
+                  icon={<Assignment />}
+                  backgroundColor={this.context.myColors.accent1Color}
+                />
+              }
+              rightIcon={this.props.notifications && this.props.notifications !== 0 ?
+                <Badge badgeContent={3} primary style={{ top: '0px' }}>
+                  <QuestionAnswer />
+                </Badge>
+              :
                 <QuestionAnswer />
-              </Badge>
-            :
-              <QuestionAnswer />
-            }
-            primaryText={assignment.title + className}
-            secondaryText={`Time: ${dueDate.toString().slice(16)}`}
-          />
+              }
+              primaryText={assignment.title + className}
+              secondaryText={`Time: ${dueDate.toString().slice(16)}`}
+            />
+          </Link>
         </div>
       );
     });
@@ -137,21 +142,26 @@ export default class AssignmentsList extends React.Component {
       return (
         <div key={assignment._id}>
           {divider}
-          <ListItem
-            key={assignment._id}
-            leftAvatar={
-              <Avatar icon={<AssignmentTurnedIn />} backgroundColor={this.context.myColors.accent1Color} />
-            }
-            rightIcon={this.props.notifications && this.props.notifications !== 0 ?
-              <Badge badgeContent={3} primary style={{ top: '0px' }}>
+          <Link to={`/teacher/questions/${assignment._id}`}>
+            <ListItem
+              key={assignment._id}
+              leftAvatar={
+                <Avatar
+                  icon={<AssignmentTurnedIn />}
+                  backgroundColor={this.context.myColors.accent1Color}
+                />
+              }
+              rightIcon={this.props.notifications && this.props.notifications !== 0 ?
+                <Badge badgeContent={3} primary style={{ top: '0px' }}>
+                  <QuestionAnswer />
+                </Badge>
+              :
                 <QuestionAnswer />
-              </Badge>
-            :
-              <QuestionAnswer />
-            }
-            primaryText={assignment.title + className}
-            secondaryText={`Due Date: ${dueDate.toString()}`}
-          />
+              }
+              primaryText={assignment.title + className}
+              secondaryText={`Due Date: ${dueDate.toString()}`}
+            />
+          </Link>
         </div>
       );
     });
@@ -218,13 +228,14 @@ export default class AssignmentsList extends React.Component {
   }
 }
 
-AssignmentsList.propTypes = {
+TeacherAssignmentsList.propTypes = {
   assignments: React.PropTypes.array,
   classId: React.PropTypes.string,
   myClasses: React.PropTypes.array,
   notifications: React.PropTypes.number,
 };
 
-AssignmentsList.contextTypes = {
+TeacherAssignmentsList.contextTypes = {
+  router: React.PropTypes.object,
   myColors: React.PropTypes.object,
 };

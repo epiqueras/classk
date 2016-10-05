@@ -12,13 +12,8 @@ export default createContainer(() => { // eslint-disable-line arrow-body-style
   const myStudentsHandle = Meteor.subscribe('students.allMyStudents');
   return {
     loading: !(mySchoolHandle.ready() && myTeachersHandle.ready() && myStudentsHandle.ready()),
-    myColors: {
-      primary1Color: '#303F9F',
-      primary2Color: '#3F51B5',
-      primary3Color: '#C5CAE9',
-      accent1Color: '#00BCD4',
-    },
-    mySchool: Schools.find({ schoolId: Meteor.userId() }).fetch(),
+    myColors: Schools.findOne({ schoolId: Meteor.userId() }, { fields: { colors: 1 } }),
+    mySchool: Schools.findOne({ schoolId: Meteor.userId() }),
     myTeachers: Teachers.find({ schoolId: Meteor.userId() }).fetch(),
     myStudents: Students.find({ schoolId: Meteor.userId() }).fetch(),
   };

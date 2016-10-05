@@ -23,7 +23,7 @@ export default class TeacherClassesPage extends React.Component {
   }
 
   componentDidMount() {
-    this.context.changeNavbarText(' - Classes');
+    this.context.changeNavbarText('My Classes');
   }
 
   handleChange(event) {

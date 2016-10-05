@@ -24,9 +24,6 @@ Classes.schema = new SimpleSchema({
 
 Classes.attachSchema(Classes.schema);
 
-// This represents the keys from Lists objects that should be published
-// to the client. If we add secret properties to List objects, don't list
-// them here to keep them private to the server.
 Classes.publicFields = {
   schoolId: 1,
   teacherId: 1,
