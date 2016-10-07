@@ -50,27 +50,47 @@ export default class StudentInSchoolList extends React.Component {
       </IconMenu>
     );
     return (
-      <div key={student.studentId}>
-        <ListItem
-          leftAvatar={
-            <Avatar src={Gravatar.imageUrl(student.md5hash, { secure: true, d: 'retro' })} />
-          }
-          rightIconButton={rightIconMenu}
-          primaryText={`${student.firstName} ${student.lastName}`}
-          secondaryText={`Grade ${student.grade}`}
-          primaryTogglesNestedList
-          nestedItems={[
-            <ListItem key={1} disabled>
-              <div className="row">
-                <div className="col-xs-4">{`Questions: ${student.questions}`}</div>
-                <div className="col-xs-4">
-                  {`Accepted Answers: ${student.acceptedAnswers}/${student.answers}`}
+      <div>
+        {!this.props.studentView ?
+          <ListItem
+            leftAvatar={
+              <Avatar src={Gravatar.imageUrl(student.md5hash, { secure: true, d: 'retro' })} />
+            }
+            rightIconButton={rightIconMenu}
+            primaryText={`${student.firstName} ${student.lastName}`}
+            secondaryText={`Grade ${student.grade}`}
+            primaryTogglesNestedList
+            nestedItems={[
+              <ListItem key={1} disabled>
+                <div className="row center-xs middle-xs">
+                  <div className="col-xs-6">{`Questions: ${student.questions}`}</div>
+                  <div className="col-xs-6">
+                    {`Accepted Answers: ${student.acceptedAnswers}/${student.answers}`}
+                  </div>
                 </div>
-                <div className="col-xs-4">{`Points: ${student.points}`}</div>
-              </div>
-            </ListItem>,
-          ]}
-        />
+              </ListItem>,
+            ]}
+          />
+        :
+          <ListItem
+            leftAvatar={
+              <Avatar src={Gravatar.imageUrl(student.md5hash, { secure: true, d: 'retro' })} />
+            }
+            primaryText={`${student.firstName} ${student.lastName}`}
+            secondaryText={`Grade ${student.grade}`}
+            primaryTogglesNestedList
+            nestedItems={[
+              <ListItem key={1} disabled>
+                <div className="row center-xs middle-xs">
+                  <div className="col-xs-6">{`Questions: ${student.questions}`}</div>
+                  <div className="col-xs-6">
+                    {`Accepted Answers: ${student.acceptedAnswers}/${student.answers}`}
+                  </div>
+                </div>
+              </ListItem>,
+            ]}
+          />
+        }
         <Divider inset />
       </div>
     );
@@ -80,4 +100,5 @@ export default class StudentInSchoolList extends React.Component {
 StudentInSchoolList.propTypes = {
   student: React.PropTypes.object,
   theClassId: React.PropTypes.string,
+  studentView: React.PropTypes.bool,
 };

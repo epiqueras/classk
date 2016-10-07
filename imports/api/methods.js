@@ -20,10 +20,12 @@ export const getAppropiateRoute = new ValidatedMethod({
       return '/';
     }
 
-    // Hidden admin.
-    if (Roles.userIsInRole(this.userId, 'hidden-admin', Roles.GLOBAL_GROUP)) {
-      console.log('hidddeennnnnnn');
-      return '/hidden-admin';
+    const schoolId = Object.keys(Meteor.user().roles)[0];
+    if (Roles.userIsInRole(this.userId, 'student', schoolId)) {
+      return '/student';
+    }
+    if (Roles.userIsInRole(this.userId, 'teacher', schoolId)) {
+      return '/teacher';
     }
 
     // School user.
@@ -31,13 +33,14 @@ export const getAppropiateRoute = new ValidatedMethod({
       return '/school-admin';
     }
 
-    const schoolId = Object.keys(Meteor.user().roles)[0];
-    if (Roles.userIsInRole(this.userId, 'teacher', schoolId)) {
-      return '/teacher';
+    // Hidden admin.
+    if (Roles.userIsInRole(this.userId, 'hidden-admin', Roles.GLOBAL_GROUP)) {
+      console.log('hidddeennnnnnn');
+      return '/hidden-admin';
     }
 
     console.log('unmet conditions');
-    // return '/';
+    return '/';
   },
 });
 

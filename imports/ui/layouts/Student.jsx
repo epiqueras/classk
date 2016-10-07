@@ -12,7 +12,7 @@ import AppNavigationBar from '../components/AppNavigationBar.jsx';
 
 import colorPalette from '../stylesheets/colorPalette.jsx';
 
-export default class Teacher extends React.Component {
+export default class Student extends React.Component {
   constructor(props) {
     super(props);
     this.state = { navbarText: '' };
@@ -21,7 +21,6 @@ export default class Teacher extends React.Component {
 
   getChildContext() {
     return {
-      mySchoolStudents: this.props.mySchoolStudents,
       changeNavbarText: this.changeNavbarText,
       myColors: this.props.myColors ? this.props.myColors.colors : {},
     };
@@ -35,7 +34,7 @@ export default class Teacher extends React.Component {
         this.context.router.replace('/');
       } else if (this.props.user && this.props.user.roles) {
         const schoolId = Object.keys(this.props.user.roles)[0];
-        if (!Roles.userIsInRole(this.context.userId, 'teacher', schoolId)) {
+        if (!Roles.userIsInRole(this.context.userId, 'student', schoolId)) {
           Alert.error('You are not authorized to enter this page.');
           this.context.router.replace('/');
         }
@@ -51,7 +50,7 @@ export default class Teacher extends React.Component {
         this.context.router.replace('/');
       } else if (this.props.user && this.props.user.roles) {
         const schoolId = Object.keys(this.props.user.roles)[0];
-        if (!Roles.userIsInRole(this.context.userId, 'teacher', schoolId)) {
+        if (!Roles.userIsInRole(this.context.userId, 'student', schoolId)) {
           Alert.error('You are not authorized to enter this page.');
           this.context.router.replace('/');
         }
@@ -65,7 +64,7 @@ export default class Teacher extends React.Component {
 
   render() {
     const {
-      myTeacherObject,
+      myStudentObject,
       children,
       location,
     } = this.props;
@@ -107,16 +106,16 @@ export default class Teacher extends React.Component {
     ), 0);
 
     const AppBarNavigationTabs = [
-      { name: 'Stats', iconName: 'DataUsage', route: '/teacher/stats' },
+      { name: 'Stats', iconName: 'DataUsage', route: '/student/stats' },
       {
         name: 'Classes',
         iconName: 'Group',
-        route: '/teacher/classes',
+        route: '/student/classes',
       },
       {
         name: 'Assignments',
         iconName: 'Assignment',
-        route: '/teacher/assignments',
+        route: '/student/assignments',
         notifications: assignments,
       },
     ];
@@ -127,7 +126,7 @@ export default class Teacher extends React.Component {
         {this.props.loading ? <LoadingScreen /> :
           <div>
             <AppNavigationBar
-              title={this.state.navbarText ? this.state.navbarText : myTeacherObject.firstName}
+              title={this.state.navbarText ? this.state.navbarText : myStudentObject.firstName}
               navigationTabs={AppBarNavigationTabs}
             />
             {clonedChildren}
@@ -139,24 +138,22 @@ export default class Teacher extends React.Component {
   }
 }
 
-Teacher.propTypes = {
+Student.propTypes = {
   user: React.PropTypes.object,
   loading: React.PropTypes.bool,
   myColors: React.PropTypes.object,
-  myTeacherObject: React.PropTypes.object,
-  mySchoolStudents: React.PropTypes.array,
+  myStudentObject: React.PropTypes.object,
   assignments: React.PropTypes.array,
   children: React.PropTypes.element,
   location: React.PropTypes.object,
 };
 
-Teacher.contextTypes = {
+Student.contextTypes = {
   router: React.PropTypes.object,
   userId: React.PropTypes.string,
 };
 
-Teacher.childContextTypes = {
-  mySchoolStudents: React.PropTypes.array,
+Student.childContextTypes = {
   changeNavbarText: React.PropTypes.func,
   myColors: React.PropTypes.object,
 };

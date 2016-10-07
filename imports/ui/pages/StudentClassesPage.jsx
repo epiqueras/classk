@@ -2,24 +2,19 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import GroupAdd from 'material-ui/svg-icons/social/group-add';
-import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 
 import LoadingScreen from '../components/LoadingScreen.jsx';
-import AddClassForm from '../components/AddClassForm.jsx';
 import ClassCard from '../components/ClassCard.jsx';
 
-export default class TeacherClassesPage extends React.Component {
+export default class StudentClassesPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       searchValue: '',
-      createButtonToggled: false,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
   }
 
   componentDidMount() {
@@ -29,12 +24,6 @@ export default class TeacherClassesPage extends React.Component {
   handleChange(event) {
     this.setState({
       searchValue: event.target.value,
-    });
-  }
-
-  toggleForm() {
-    this.setState({
-      createButtonToggled: !this.state.createButtonToggled,
     });
   }
 
@@ -51,9 +40,10 @@ export default class TeacherClassesPage extends React.Component {
       return (
         <div key={theClass._id} className="col-xs-12 col-md-6">
           <ClassCard
-            mySchoolStudents={this.context.mySchoolStudents}
+            mySchoolStudents={this.props.myClassmates}
             theClass={theClass}
             notifications={assignments}
+            studentView
           />
           <br />
         </div>
@@ -66,7 +56,7 @@ export default class TeacherClassesPage extends React.Component {
           <div className="row center-xs middle-xs">
             <div className="col-xs-12">
               <div className="row middle-xs center-xs">
-                <div className="col-xs-7 col-sm-8">
+                <div className="col-xs-11">
                   <TextField
                     id="text-field-controlled"
                     value={this.state.searchValue}
@@ -76,16 +66,7 @@ export default class TeacherClassesPage extends React.Component {
                     floatingLabelText="Search for a Class...."
                   />
                 </div>
-                <div className="col-xs-4 col-sm-3">
-                  <FlatButton label="Add Class" icon={<GroupAdd />} onClick={this.toggleForm} />
-                </div>
               </div>
-            </div>
-            <div className="col-xs-12">
-              <AddClassForm
-                createFormOpen={this.state.createButtonToggled}
-                toggleForm={this.toggleForm}
-              />
             </div>
             <div className="col-xs-12">
               <div className="row center-xs">
@@ -109,13 +90,13 @@ export default class TeacherClassesPage extends React.Component {
   }
 }
 
-TeacherClassesPage.propTypes = {
+StudentClassesPage.propTypes = {
   loading: React.PropTypes.bool,
-  myClasses: React.PropTypes.array,
+  myClassmates: React.PropTypes.array,
   assignments: React.PropTypes.array,
+  myClasses: React.PropTypes.array,
 };
 
-TeacherClassesPage.contextTypes = {
-  mySchoolStudents: React.PropTypes.array,
+StudentClassesPage.contextTypes = {
   changeNavbarText: React.PropTypes.func,
 };

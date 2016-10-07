@@ -24,7 +24,6 @@ Students.schema = new SimpleSchema({
   questions: { type: Number, defaultValue: 0 },
   answers: { type: Number, defaultValue: 0 },
   acceptedAnswers: { type: Number, defaultValue: 0 },
-  points: { type: Number, defaultValue: 0 },
   createdAt: { type: Date, defaultValue: new Date() },
 });
 
@@ -36,8 +35,8 @@ Students.publicFields = {
   studentId: 1,
   firstName: 1,
   lastName: 1,
+  grade: 1,
   questions: 1,
   answers: 1,
   acceptedAnswers: 1,
-  points: 1,
 };

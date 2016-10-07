@@ -52,6 +52,7 @@ export default class ClassCard extends React.Component {
 
   render() {
     const theClass = this.props.theClass;
+    const studentView = this.props.studentView;
 
     const studentsInClassList = this.props.mySchoolStudents.filter(student => (
       theClass.studentIds.includes(student.studentId)
@@ -60,6 +61,7 @@ export default class ClassCard extends React.Component {
         key={student.studentId}
         student={student}
         theClassId={this.props.theClass._id}
+        studentView={this.props.studentView}
       />
     ));
 
@@ -82,10 +84,13 @@ export default class ClassCard extends React.Component {
           showExpandableButton
         />
         <CardActions>
-          <Link to={`/teacher/assignments/${theClass._id}`}>
+          <Link
+            to={!studentView ? `/teacher/assignments/${theClass._id}`
+              : `/student/assignments/${theClass._id}`}
+          >
             {this.props.notifications && this.props.notifications !== 0 ?
               <Badge
-                badgeContent={3}
+                badgeContent={this.props.notifications}
                 primary
               >
                 <FlatButton label="Assignments" style={{ margin: '-14px' }} />
@@ -95,16 +100,18 @@ export default class ClassCard extends React.Component {
             }
           </Link>
           <FlatButton
-            label="Edit Members"
+            label={!studentView ? "Edit Members" : "View Members"}
             onTouchTap={this.toggleCardExpanded}
             style={{ marginLeft: '-1px' }}
           />
-          <IconMenu
-            iconButtonElement={iconButtonElement}
-            style={{ position: 'absolute', right: '-14px', bottom: '-4px' }}
-          >
-            <MenuItem onTouchTap={this.deleteTheClass}>Confirm Deletion</MenuItem>
-          </IconMenu>
+          {!studentView ?
+            <IconMenu
+              iconButtonElement={iconButtonElement}
+              style={{ position: 'absolute', right: '-14px', bottom: '-4px' }}
+            >
+              <MenuItem onTouchTap={this.deleteTheClass}>Confirm Deletion</MenuItem>
+            </IconMenu>
+          : '' }
         </CardActions>
         <CardText expandable>
           <Divider />
@@ -112,10 +119,12 @@ export default class ClassCard extends React.Component {
             Students
           </Subheader>
           <Divider />
-          <AddStudentToClass
-            mySchoolStudents={this.props.mySchoolStudents}
-            theClassId={this.props.theClass._id}
-          />
+          {!studentView ?
+            <AddStudentToClass
+              mySchoolStudents={this.props.mySchoolStudents}
+              theClassId={this.props.theClass._id}
+            />
+          : ''}
           <List>
             {studentsInClassList}
           </List>
@@ -129,4 +138,5 @@ ClassCard.propTypes = {
   mySchoolStudents: React.PropTypes.array,
   theClass: React.PropTypes.object,
   notifications: React.PropTypes.number,
+  studentView: React.PropTypes.bool,
 };

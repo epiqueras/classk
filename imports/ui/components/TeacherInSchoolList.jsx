@@ -48,7 +48,7 @@ export default class TeacherInSchoolList extends React.Component {
       </IconMenu>
     );
     return (
-      <div key={teacher.teacherId}>
+      <div>
         <ListItem
           leftAvatar={
             <Avatar src={Gravatar.imageUrl(teacher.md5hash, { secure: true, d: 'retro' })} />

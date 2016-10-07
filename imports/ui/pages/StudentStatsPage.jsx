@@ -1,12 +1,8 @@
 import React from 'react';
 import ProgressBar from 'react-progressbar.js';
 
-export default class TeacherStatsPage extends React.Component {
+export default class StudentStatsPage extends React.Component {
   render() {
-    // const numberOfTeachers = this.context.myTeachers.length;
-    // const numberOfStudents = this.context.myStudents.length;
-    // const numberOfUsers = numberOfTeachers + numberOfStudents;
-    // const userWheelValue = numberOfUsers / 100;
     const wheelOptions = {
       color: '#aaa',
       // This has to be the same size as the maximum width to
@@ -65,11 +61,11 @@ export default class TeacherStatsPage extends React.Component {
   }
 }
 
-TeacherStatsPage.propTypes = {
+StudentStatsPage.propTypes = {
   assignments: React.PropTypes.array,
 };
 
-TeacherStatsPage.contextTypes = {
+StudentStatsPage.contextTypes = {
   myColors: React.PropTypes.object,
   changeNavbarText: React.PropTypes.func,
 };

@@ -34,3 +34,39 @@ Meteor.publish('students.mySchoolStudents', function publishMySchoolStudents() {
   this.stop();
   return null;
 });
+
+Meteor.publish('students.myStudentObject', function publishMyStudentObject() {
+  const studentObject = Students.findOne({ studentId: this.userId });
+  if (!studentObject) {
+    this.stop();
+    return null;
+  }
+  const schoolId = studentObject.schoolId;
+  if (Roles.userIsInRole(this.userId, 'student', schoolId)) {
+    return Students.find({
+      studentId: this.userId,
+    }, {
+      fields: Students.publicFields,
+    });
+  }
+  this.stop();
+  return null;
+});
+
+Meteor.publish('students.myClassmates', function publishMyClassmates() {
+  const studentObject = Students.findOne({ studentId: this.userId });
+  if (!studentObject) {
+    this.stop();
+    return null;
+  }
+  const schoolId = studentObject.schoolId;
+  if (Roles.userIsInRole(this.userId, 'student', schoolId)) {
+    return Students.find({
+      schoolId,
+    }, {
+      fields: Students.publicFields,
+    });
+  }
+  this.stop();
+  return null;
+});

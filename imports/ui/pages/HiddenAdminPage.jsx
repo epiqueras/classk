@@ -6,6 +6,9 @@ import React from 'react';
 import Alert from 'react-s-alert';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import customMuiTheme from '../stylesheets/customMuiTheme.jsx';
 
 import { createSchoolUser } from '../../api/methods.js';
 
@@ -73,32 +76,34 @@ export default class HiddenAdminPage extends React.Component {
   render() {
     return (
       <div className="full-height">
-        <div className="row center-xs middle-xs login-row">
-          <div className="col-xs-12 login-column">
-            <h2>Leave if not authorized</h2>
-            <form onChange={(e) => { e.stopPropagation(); }} onSubmit={this.onSubmit}>
-              <TextField
-                name="schoolName"
-                type="text"
-                hintText="School Name"
-                floatingLabelText="School Name"
-                errorText={this.state.errors.schoolName}
-              />
-              <br />
-              <TextField
-                name="email"
-                type="email"
-                hintText="Email Address"
-                floatingLabelText="Email Address"
-                errorText={this.state.errors.email}
-              />
+        <MuiThemeProvider muiTheme={customMuiTheme}>
+          <div className="row center-xs middle-xs login-row">
+            <div className="col-xs-12 login-column">
+              <h2>Leave if not authorized</h2>
+              <form onChange={(e) => { e.stopPropagation(); }} onSubmit={this.onSubmit}>
+                <TextField
+                  name="schoolName"
+                  type="text"
+                  hintText="School Name"
+                  floatingLabelText="School Name"
+                  errorText={this.state.errors.schoolName}
+                />
+                <br />
+                <TextField
+                  name="email"
+                  type="email"
+                  hintText="Email Address"
+                  floatingLabelText="Email Address"
+                  errorText={this.state.errors.email}
+                />
+                <br /><br /><br />
+                <RaisedButton type="submit" label="Create School" primary />
+              </form>
               <br /><br /><br />
-              <RaisedButton type="submit" label="Create School" primary />
-            </form>
-            <br /><br /><br />
-            <RaisedButton onClick={this.onLogoutClick} label="Logout" primary />
+              <RaisedButton onClick={this.onLogoutClick} label="Logout" primary />
+            </div>
           </div>
-        </div>
+        </MuiThemeProvider>
       </div>
     );
   }

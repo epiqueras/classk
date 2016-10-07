@@ -142,60 +142,60 @@ export default class AddAssignmentForm extends React.Component {
 
     return (
       <div className="row center-xs middle-xs">
-      {this.props.createFormOpen ?
-        <div className="col-xs-12">
-          <Paper zDepth={1}>
-            <form onChange={(e) => { e.stopPropagation(); }} onSubmit={this.onSubmit}>
-              <div className="row center-xs middle-xs around-xs">
-                <div className="col-xs-12 col-sm-6">
-                  <TextField
-                    name="title"
-                    type="text"
-                    hintText="Title"
-                    floatingLabelText="Title"
-                    errorText={this.state.errors.title}
-                  />
+        {this.props.createFormOpen ?
+          <div className="col-xs-12">
+            <Paper zDepth={1}>
+              <form onChange={(e) => { e.stopPropagation(); }} onSubmit={this.onSubmit}>
+                <div className="row center-xs middle-xs around-xs">
+                  <div className="col-xs-12 col-sm-6">
+                    <TextField
+                      name="title"
+                      type="text"
+                      hintText="Title"
+                      floatingLabelText="Title"
+                      errorText={this.state.errors.title}
+                    />
+                  </div>
+                  <div className="col-xs-12 col-sm-6">
+                    <SelectField
+                      value={this.state.selectedClass}
+                      onChange={this.handleClassChange}
+                      maxHeight={200}
+                      floatingLabelText="Select a class"
+                    >
+                      {theClassesList}
+                    </SelectField>
+                  </div>
+                  <div className="col-xs-12 col-sm-6">
+                    <DatePicker
+                      hintText="Select a due date"
+                      value={selectedDate}
+                      onChange={this.handleDateChange}
+                    />
+                  </div>
+                  <div className="col-xs-12 col-sm-6">
+                    <TimePicker
+                      format="24hr"
+                      hintText="Select a time"
+                      value={selectedTime}
+                      onChange={this.handleTimeChange}
+                    />
+                  </div>
                 </div>
-                <div className="col-xs-12 col-sm-6">
-                  <SelectField
-                    value={this.state.selectedClass}
-                    onChange={this.handleClassChange}
-                    maxHeight={200}
-                    floatingLabelText="Select a class"
-                  >
-                    {theClassesList}
-                  </SelectField>
+                <br /><br />
+                <div className="row">
+                  <div className="col-xs-12">
+                    <TextEditor getContentJson={this.getContentJson} />
+                  </div>
                 </div>
-                <div className="col-xs-12 col-sm-6">
-                  <DatePicker
-                    hintText="Select a due date"
-                    value={selectedDate}
-                    onChange={this.handleDateChange}
-                  />
-                </div>
-                <div className="col-xs-12 col-sm-6">
-                  <TimePicker
-                    format="24hr"
-                    hintText="Select a time"
-                    value={selectedTime}
-                    onChange={this.handleTimeChange}
-                  />
-                </div>
-              </div>
-              <br /><br />
-              <div className="row">
-                <div className="col-xs-12">
-                  <TextEditor getContentJson={this.getContentJson} />
-                </div>
-              </div>
-              <br />
-              <RaisedButton type="submit" label="Create Assignment" primary />
-              <br /><br />
-            </form>
-          </Paper>
-          <br /><br />
-        </div>
-      : ''}
+                <br />
+                <RaisedButton type="submit" label="Create Assignment" primary />
+                <br /><br />
+              </form>
+            </Paper>
+            <br /><br />
+          </div>
+        : ''}
       </div>
     );
   }

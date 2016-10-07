@@ -27,3 +27,7 @@ import '../../api/assignments/server/publications.js';
 // questions
 import '../../api/questions/methods.js';
 import '../../api/questions/server/publications.js';
+
+// answers
+import '../../api/answers/methods.js';
+import '../../api/answers/server/publications.js';

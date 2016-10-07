@@ -12,7 +12,7 @@ import Avatar from 'material-ui/Avatar';
 import Assignment from 'material-ui/svg-icons/action/assignment';
 import AssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 
-export default class TeacherAssignmentsList extends React.Component {
+export default class AssignmentsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,17 +80,19 @@ export default class TeacherAssignmentsList extends React.Component {
       return (
         <div key={assignment._id}>
           {divider}
-          <Link to={`/teacher/questions/${assignment._id}`}>
+          <Link
+            to={!this.props.studentView ? `/teacher/questions/${assignment._id}`
+            : `/student/questions/${assignment._id}`}
+          >
             <ListItem
-              key={assignment._id}
               leftAvatar={
                 <Avatar
                   icon={<Assignment />}
                   backgroundColor={this.context.myColors.accent1Color}
                 />
               }
-              rightIcon={this.props.notifications && this.props.notifications !== 0 ?
-                <Badge badgeContent={3} primary style={{ top: '0px' }}>
+              rightIcon={assignment.unanswered !== 0 ?
+                <Badge badgeContent={assignment.unanswered} primary style={{ top: '0px' }}>
                   <QuestionAnswer />
                 </Badge>
               :
@@ -139,17 +141,19 @@ export default class TeacherAssignmentsList extends React.Component {
       return (
         <div key={assignment._id}>
           {divider}
-          <Link to={`/teacher/questions/${assignment._id}`}>
+          <Link
+            to={!this.props.studentView ? `/teacher/questions/${assignment._id}`
+            : `/student/questions/${assignment._id}`}
+          >
             <ListItem
-              key={assignment._id}
               leftAvatar={
                 <Avatar
                   icon={<AssignmentTurnedIn />}
                   backgroundColor={this.context.myColors.accent1Color}
                 />
               }
-              rightIcon={this.props.notifications && this.props.notifications !== 0 ?
-                <Badge badgeContent={3} primary style={{ top: '0px' }}>
+              rightIcon={assignment.unanswered !== 0 ?
+                <Badge badgeContent={assignment.unanswered} primary style={{ top: '0px' }}>
                   <QuestionAnswer />
                 </Badge>
               :
@@ -225,14 +229,14 @@ export default class TeacherAssignmentsList extends React.Component {
   }
 }
 
-TeacherAssignmentsList.propTypes = {
+AssignmentsList.propTypes = {
   assignments: React.PropTypes.array,
   classId: React.PropTypes.string,
   myClasses: React.PropTypes.array,
-  notifications: React.PropTypes.number,
+  studentView: React.PropTypes.bool,
 };
 
-TeacherAssignmentsList.contextTypes = {
+AssignmentsList.contextTypes = {
   router: React.PropTypes.object,
   myColors: React.PropTypes.object,
 };

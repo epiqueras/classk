@@ -1,10 +1,29 @@
 /* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-underscore-dangle */
 import { Mongo } from 'meteor/mongo';
 // eslint-disable-next-line import/no-unresolved
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import { Assignments } from '../assignments/assignments.js';
+
+class ClassesCollection extends Mongo.Collection {
+  insert(doc, callback) {
+    const result = super.insert(doc, callback);
+    return result;
+  }
+  update(selector, modifier) {
+    const result = super.update(selector, modifier);
+    return result;
+  }
+  remove(selector) {
+    const result = super.remove(selector);
+    Assignments.remove({ classId: selector._id });
+    return result;
+  }
+}
+
 // eslint-disable-next-line import/prefer-default-export
-export const Classes = new Mongo.Collection('Classes');
+export const Classes = new ClassesCollection('Classes');
 
 // Deny all client-side updates since we will be using methods to manage this collection
 Classes.deny({
@@ -20,6 +39,7 @@ Classes.schema = new SimpleSchema({
   name: { type: String, max: 30 },
   description: { type: String, max: 150 },
   studentIds: { type: [String], defaultValue: [] },
+  assignments: { type: Number, defaultValue: 0 },
 });
 
 Classes.attachSchema(Classes.schema);
@@ -30,4 +50,5 @@ Classes.publicFields = {
   name: 1,
   description: 1,
   studentIds: 1,
+  assignments: 1,
 };

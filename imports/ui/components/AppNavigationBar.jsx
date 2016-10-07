@@ -60,6 +60,7 @@ export default class AppNavigationBar extends React.Component {
 
   logout() {
     Meteor.logout();
+    this.context.router.replace('/');
   }
 
   render() {

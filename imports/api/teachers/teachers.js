@@ -3,8 +3,26 @@ import { Mongo } from 'meteor/mongo';
 // eslint-disable-next-line import/no-unresolved
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import { Classes } from '../classes/classes.js';
+
+class TeachersCollection extends Mongo.Collection {
+  insert(doc, callback) {
+    const result = super.insert(doc, callback);
+    return result;
+  }
+  update(selector, modifier) {
+    const result = super.update(selector, modifier);
+    return result;
+  }
+  remove(selector) {
+    const result = super.remove(selector);
+    Classes.remove(selector);
+    return result;
+  }
+}
+
 // eslint-disable-next-line import/prefer-default-export
-export const Teachers = new Mongo.Collection('Teachers');
+export const Teachers = new TeachersCollection('Teachers');
 
 // Deny all client-side updates since we will be using methods to manage this collection
 Teachers.deny({
@@ -22,6 +40,7 @@ Teachers.schema = new SimpleSchema({
   lastName: { type: String, max: 30 },
   assignmentsSet: { type: Number, defaultValue: 0 },
   answers: { type: Number, defaultValue: 0 },
+  acceptedAnswers: { type: Number, defaultValue: 0 },
   createdAt: { type: Date, defaultValue: new Date() },
 });
 
@@ -35,4 +54,5 @@ Teachers.publicFields = {
   lastName: 1,
   assignmentsSet: 1,
   answers: 1,
+  acceptedAnswers: 1,
 };

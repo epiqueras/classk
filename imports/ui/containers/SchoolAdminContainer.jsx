@@ -10,8 +10,10 @@ export default createContainer(() => { // eslint-disable-line arrow-body-style
   const mySchoolHandle = Meteor.subscribe('schools.mySchool');
   const myTeachersHandle = Meteor.subscribe('teachers.allMyTeachers');
   const myStudentsHandle = Meteor.subscribe('students.allMyStudents');
+  const myAssignmentsHandle = Meteor.subscribe('assignments.mySchoolAssignments');
   return {
-    loading: !(mySchoolHandle.ready() && myTeachersHandle.ready() && myStudentsHandle.ready()),
+    loading: !(mySchoolHandle.ready() && myTeachersHandle.ready()
+      && myStudentsHandle.ready() && myAssignmentsHandle.ready()),
     myColors: Schools.findOne({ schoolId: Meteor.userId() }, { fields: { colors: 1 } }),
     mySchool: Schools.findOne({ schoolId: Meteor.userId() }),
     myTeachers: Teachers.find({ schoolId: Meteor.userId() }).fetch(),

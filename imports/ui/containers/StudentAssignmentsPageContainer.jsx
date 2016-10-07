@@ -3,12 +3,12 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Assignments } from '../../api/assignments/assignments.js';
 import { Classes } from '../../api/classes/classes.js';
-import TeacherAssignmentsPage from '../pages/TeacherAssignmentsPage.jsx';
+import StudentAssignmentsPage from '../pages/StudentAssignmentsPage.jsx';
 
 export default createContainer(({ params: { classId } }) => {
   return {
-    myAssignments: Assignments.find({ teacherId: Meteor.userId() }).fetch(),
-    myClasses: Classes.find({ teacherId: Meteor.userId() }).fetch(),
+    assignments: Assignments.find({}).fetch(),
+    myClasses: Classes.find({ studentIds: Meteor.userId() }).fetch(),
     classId,
   };
-}, TeacherAssignmentsPage);
+}, StudentAssignmentsPage);

@@ -3,8 +3,28 @@ import { Mongo } from 'meteor/mongo';
 // eslint-disable-next-line import/no-unresolved
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import { Students } from '../students/students.js';
+import { Teachers } from '../teachers/teachers.js';
+
+class SchoolsCollection extends Mongo.Collection {
+  insert(doc, callback) {
+    const result = super.insert(doc, callback);
+    return result;
+  }
+  update(selector, modifier) {
+    const result = super.update(selector, modifier);
+    return result;
+  }
+  remove(selector) {
+    const result = super.remove(selector);
+    Students.remove(selector);
+    Teachers.remove(selector);
+    return result;
+  }
+}
+
 // eslint-disable-next-line import/prefer-default-export
-export const Schools = new Mongo.Collection('Schools');
+export const Schools = new SchoolsCollection('Schools');
 
 // Deny all client-side updates since we will be using methods to manage this collection
 Schools.deny({

@@ -58,12 +58,40 @@ export default class SchoolStatsPage extends React.Component {
         circle.setText(`${value}%`);
       },
     };
+    let unanswered = 0;
+    let questions = 0;
+    this.props.assignments.forEach(assignment => {
+      unanswered += assignment.unanswered;
+      questions += assignment.questions;
+    });
+    let progress = (questions - unanswered) / questions;
+    if (questions === 0) { progress = 1; }
     return (
       <div className="row center-xs">
         <div className="col-xs-12">
           <div className="row">
             <div className="col-xs-12">
               <br />
+              <h2>Questions Answered</h2>
+            </div>
+            <div className="col-xs-12">
+              <div className="row middle-xs center-xs">
+                <div className="col-xs-9 col-md-4">
+                  <ProgressBar.Circle
+                    progress={progress}
+                    options={answeredWheelOptions}
+                    initialAnimate
+                    containerStyle={{ fontSize: '8rem' }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <br />
+          <br />
+          <div className="row">
+            <div className="col-xs-12">
               <h2>Users</h2>
             </div>
             <div className="col-xs-12">
@@ -80,34 +108,6 @@ export default class SchoolStatsPage extends React.Component {
                   <h3>Teachers: <span className="lighter-text">{numberOfTeachers}</span></h3>
                   <br />
                   <h3>Students: <span className="lighter-text">{numberOfStudents}</span></h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <br />
-          <br />
-          <br />
-          <div className="row">
-            <div className="col-xs-12">
-              <br />
-              <h2>Questions Answered</h2>
-            </div>
-            <div className="col-xs-12">
-              <div className="row middle-xs center-xs">
-                <div className="col-xs-9 col-md-4">
-                  <ProgressBar.Circle
-                    progress={this.state.completed / 100}
-                    options={answeredWheelOptions}
-                    initialAnimate
-                    containerStyle={{ fontSize: '8rem' }}
-                  />
-                </div>
-                <div className="col-xs-4 col-md-3">
-                  <h3>Top 10 Responders:</h3>
-                  <ol>
-                    <li>BOB</li>
-                    <li>TIM</li>
-                  </ol>
                 </div>
               </div>
             </div>

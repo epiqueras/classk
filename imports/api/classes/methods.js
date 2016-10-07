@@ -23,7 +23,7 @@ export const insertNewClass = new ValidatedMethod({
     }
     const schoolId = teacherObject.schoolId;
     if (!Roles.userIsInRole(this.userId, 'teacher', schoolId)) {
-      throw new Meteor.Error('utility.insertNewClass.unauthorized',
+      throw new Meteor.Error('classes.insertNewClass.unauthorized',
         'Only teachers may create classes.');
     } else {
       Classes.insert({
@@ -56,10 +56,10 @@ export const addToClass = new ValidatedMethod({
     const schoolId = teacherObject.schoolId;
     if (!Roles.userIsInRole(this.userId, 'teacher', schoolId)
       || classObject.teacherId !== teacherObject.teacherId) {
-      throw new Meteor.Error('utility.addToClass.unauthorized',
+      throw new Meteor.Error('classes.addToClass.unauthorized',
         'Only teachers may add students to their classes.');
     } else if (classObject.studentIds.includes(studentId)) {
-      throw new Meteor.Error('utility.addToClass.unauthorized',
+      throw new Meteor.Error('classes.addToClass.unauthorized',
         'Student is already in this class.');
     } else {
       Classes.update({ _id: theClassId }, { $push: { studentIds: studentId } });
@@ -87,10 +87,10 @@ export const removeFromClass = new ValidatedMethod({
     const schoolId = teacherObject.schoolId;
     if (!Roles.userIsInRole(this.userId, 'teacher', schoolId)
       || classObject.teacherId !== teacherObject.teacherId) {
-      throw new Meteor.Error('utility.removeFromClass.unauthorized',
+      throw new Meteor.Error('classes.removeFromClass.unauthorized',
         'Only teachers may remove students from their classes.');
     } else if (!classObject.studentIds.includes(studentId)) {
-      throw new Meteor.Error('utility.removeFromClass.unauthorized',
+      throw new Meteor.Error('classes.removeFromClass.unauthorized',
         'Student is not in this class.');
     } else {
       Classes.update({ _id: theClassId }, { $pull: { studentIds: studentId } });
@@ -117,11 +117,12 @@ export const deleteClass = new ValidatedMethod({
     const schoolId = teacherObject.schoolId;
     if (!Roles.userIsInRole(this.userId, 'teacher', schoolId)
       || classObject.teacherId !== teacherObject.teacherId) {
-      throw new Meteor.Error('utility.deleteClass.unauthorized',
+      throw new Meteor.Error('classes.deleteClass.unauthorized',
         'Only teachers may delete their classes.');
     } else {
       Classes.remove({ _id: theClassId });
-      Assignments.remove({ classId: theClassId });
+      const assignmentsLeft = Assignments.find({ teacherId: this.userId }).count();
+      Teachers.update({ teacherId: this.userId }, { $set: { assignmentsSet: assignmentsLeft } });
     }
   },
 });

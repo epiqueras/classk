@@ -1,23 +1,16 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
-import Alert from 'react-s-alert';
 import AssignmentReturn from 'material-ui/svg-icons/action/assignment-return';
-import DeleteSweep from 'material-ui/svg-icons/content/delete-sweep';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import LoadingScreen from '../components/LoadingScreen.jsx';
-import TextEditor from '../components/TextEditor.jsx';
+import TextDisplay from '../components/TextDisplay.jsx';
 import QuestionsList from '../components/QuestionsList.jsx';
 import AskQuestionForm from '../components/AskQuestionForm.jsx';
 
 import { getAppropiateRoute } from '../../api/methods.js';
-import { deleteAssignment, editAssignment } from '../../api/assignments/methods.js';
 
-// TODO:
-// Continue with assignment page.
-// Implement delete and save changes functions.
-
-export default class TeacherAssignmentPage extends React.Component {
+export default class StudentAssignmentPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,9 +19,6 @@ export default class TeacherAssignmentPage extends React.Component {
       createButtonToggled: false,
     };
     this.goBack = this.goBack.bind(this);
-    this.getContentJson = this.getContentJson.bind(this);
-    this.deleteAssignment = this.deleteAssignment.bind(this);
-    this.saveChanges = this.saveChanges.bind(this);
     this.toggleForm = this.toggleForm.bind(this);
   }
 
@@ -48,37 +38,8 @@ export default class TeacherAssignmentPage extends React.Component {
     }
   }
 
-  getContentJson(jsonString, textLength) {
-    this.setState({ textJson: jsonString, textCount: textLength });
-  }
-
   goBack() {
     this.context.router.goBack();
-  }
-
-  deleteAssignment() {
-    deleteAssignment.call({ assignmentId: this.props.assignment._id }, (error) => {
-      if (error) {
-        Alert.error(error.reason);
-      } else {
-        Alert.success('Assignment deleted successfuly!');
-        this.context.router.goBack();
-      }
-    });
-  }
-
-  saveChanges() {
-    editAssignment.call({
-      assignmentId: this.props.assignment._id,
-      textJson: this.state.textJson,
-      textCount: this.state.textCount,
-    }, (error) => {
-      if (error) {
-        Alert.error(error.reason);
-      } else {
-        Alert.success('Changes saved!');
-      }
-    });
   }
 
   toggleForm() {
@@ -105,26 +66,8 @@ export default class TeacherAssignmentPage extends React.Component {
             />
           </div>
           <div className="col-xs-12">
-            <TextEditor
-              getContentJson={this.getContentJson}
+            <TextDisplay
               contentJson={this.props.assignment ? this.props.assignment.text : ''}
-            />
-          </div>
-          <div className="col-xs-6" style={{ paddingRight: '0px' }}>
-            <RaisedButton
-              label="Delete"
-              icon={<DeleteSweep />}
-              onClick={this.deleteAssignment}
-              fullWidth
-              primary
-            />
-          </div>
-          <div className="col-xs-6" style={{ paddingLeft: '0px' }}>
-            <RaisedButton
-              label="Save Changes"
-              onClick={this.saveChanges}
-              fullWidth
-              secondary
             />
           </div>
           <div className="col-xs-12" style={{ height: '15px' }}>
@@ -148,6 +91,7 @@ export default class TeacherAssignmentPage extends React.Component {
           <div className="col-xs-12">
             <QuestionsList
               questions={this.props.questions}
+              studentView
             />
           </div>
         </div>
@@ -165,7 +109,7 @@ export default class TeacherAssignmentPage extends React.Component {
   }
 }
 
-TeacherAssignmentPage.propTypes = {
+StudentAssignmentPage.propTypes = {
   location: React.PropTypes.object,
   children: React.PropTypes.element,
   loading: React.PropTypes.bool,
@@ -173,7 +117,7 @@ TeacherAssignmentPage.propTypes = {
   questions: React.PropTypes.array,
 };
 
-TeacherAssignmentPage.contextTypes = {
+StudentAssignmentPage.contextTypes = {
   changeNavbarText: React.PropTypes.func,
   router: React.PropTypes.object,
 };
