@@ -16,7 +16,6 @@ export const getAppropiateRoute = new ValidatedMethod({
   run() {
     // Not logged in.
     if (!this.userId) {
-      console.log('not logged in');
       return '/';
     }
 
@@ -35,11 +34,9 @@ export const getAppropiateRoute = new ValidatedMethod({
 
     // Hidden admin.
     if (Roles.userIsInRole(this.userId, 'hidden-admin', Roles.GLOBAL_GROUP)) {
-      console.log('hidddeennnnnnn');
       return '/hidden-admin';
     }
 
-    console.log('unmet conditions');
     return '/';
   },
 });

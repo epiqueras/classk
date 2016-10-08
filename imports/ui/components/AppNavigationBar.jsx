@@ -64,9 +64,7 @@ export default class AppNavigationBar extends React.Component {
     Meteor.logout();
     this.context.router.replace('/');
     window.location.reload(true);
-    if (Meteor.isCordova) {
-      window.location = '/';
-    }
+    window.location = '/';
   }
 
   render() {
