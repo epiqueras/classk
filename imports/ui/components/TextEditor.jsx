@@ -10,6 +10,7 @@ export default class TextEditor extends React.Component {
     super(props);
     this.state = { editorContent: '', initialMount: false };
     this.onTextChange = this.onTextChange.bind(this);
+    this.focusEditor = this.focusEditor.bind(this);
     this._quillModules = {
       formula: true,
       syntax: true,
@@ -41,6 +42,7 @@ export default class TextEditor extends React.Component {
   componentDidUpdate() {
     if (this.props.contentJson && this.state.initialMount) {
       this.refs.quillRef.getEditor().setContents(JSON.parse(this.props.contentJson));
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ initialMount: false });
     }
   }
@@ -52,9 +54,13 @@ export default class TextEditor extends React.Component {
     this.setState({ editorContent: value });
   }
 
+  focusEditor() {
+    this.refs.quillRef.getEditor().focus();
+  }
+
   render() {
     return (
-      <div>
+      <div onClick={this.focusEditor}>
         <div className="_quill">
           <ReactQuill
             ref="quillRef"

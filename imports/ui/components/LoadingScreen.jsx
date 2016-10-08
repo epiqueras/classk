@@ -3,7 +3,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 const RefreshIndicatorExampleLoading = () => (
   <div className="row center-xs middle-xs loading-screen">
-    <CircularProgress className="col-xs-12 loadingIndicator" size={4} />
+    <CircularProgress className="col-xs-12 loading-indicator" size={2} />
   </div>
 );
 

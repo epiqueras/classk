@@ -13,10 +13,6 @@ import AskQuestionForm from '../components/AskQuestionForm.jsx';
 import { getAppropiateRoute } from '../../api/methods.js';
 import { deleteAssignment, editAssignment } from '../../api/assignments/methods.js';
 
-// TODO:
-// Continue with assignment page.
-// Implement delete and save changes functions.
-
 export default class TeacherAssignmentPage extends React.Component {
   constructor(props) {
     super(props);
@@ -146,9 +142,11 @@ export default class TeacherAssignmentPage extends React.Component {
             />
           </div>
           <div className="col-xs-12">
-            <QuestionsList
-              questions={this.props.questions}
-            />
+            {this.props.loading ? <LoadingScreen /> :
+              <QuestionsList
+                questions={this.props.questions}
+              />
+            }
           </div>
         </div>
       );
@@ -157,9 +155,7 @@ export default class TeacherAssignmentPage extends React.Component {
     }
     return (
       <div>
-        {this.props.loading ? <LoadingScreen /> :
-          <div>{display}</div>
-        }
+        <div>{display}</div>
       </div>
     );
   }

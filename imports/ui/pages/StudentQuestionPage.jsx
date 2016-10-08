@@ -158,7 +158,7 @@ export default class StudentQuestionPage extends React.Component {
                 <div className="row">
                   <div className="col-xs-6" style={{ paddingRight: '0px' }}>
                     <RaisedButton
-                      label="Delete Question"
+                      label="Delete"
                       icon={<DeleteSweep />}
                       onClick={this.deleteQuestion}
                       fullWidth

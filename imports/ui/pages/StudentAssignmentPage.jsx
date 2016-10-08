@@ -89,10 +89,12 @@ export default class StudentAssignmentPage extends React.Component {
             />
           </div>
           <div className="col-xs-12">
-            <QuestionsList
-              questions={this.props.questions}
-              studentView
-            />
+            {this.props.loading ? <LoadingScreen /> :
+              <QuestionsList
+                questions={this.props.questions}
+                studentView
+              />
+            }
           </div>
         </div>
       );
@@ -101,9 +103,7 @@ export default class StudentAssignmentPage extends React.Component {
     }
     return (
       <div>
-        {this.props.loading ? <LoadingScreen /> :
-          <div>{display}</div>
-        }
+        <div>{display}</div>
       </div>
     );
   }

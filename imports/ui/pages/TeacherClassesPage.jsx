@@ -62,32 +62,32 @@ export default class TeacherClassesPage extends React.Component {
 
     return (
       <div>
-        {this.props.loading ? <LoadingScreen /> :
-          <div className="row center-xs middle-xs">
-            <div className="col-xs-12">
-              <div className="row middle-xs center-xs">
-                <div className="col-xs-7 col-sm-8">
-                  <TextField
-                    id="text-field-controlled"
-                    value={this.state.searchValue}
-                    onChange={this.handleChange}
-                    fullWidth
-                    hintText="Search...."
-                    floatingLabelText="Search for a Class...."
-                  />
-                </div>
-                <div className="col-xs-4 col-sm-3">
-                  <FlatButton label="Add Class" icon={<GroupAdd />} onClick={this.toggleForm} />
-                </div>
+        <div className="row center-xs middle-xs">
+          <div className="col-xs-12">
+            <div className="row middle-xs center-xs">
+              <div className="col-xs-7 col-sm-8">
+                <TextField
+                  id="text-field-controlled"
+                  value={this.state.searchValue}
+                  onChange={this.handleChange}
+                  fullWidth
+                  hintText="Search...."
+                  floatingLabelText="Search for a Class...."
+                />
+              </div>
+              <div className="col-xs-4 col-sm-3">
+                <FlatButton label="Add Class" icon={<GroupAdd />} onClick={this.toggleForm} />
               </div>
             </div>
-            <div className="col-xs-12">
-              <AddClassForm
-                createFormOpen={this.state.createButtonToggled}
-                toggleForm={this.toggleForm}
-              />
-            </div>
-            <div className="col-xs-12">
+          </div>
+          <div className="col-xs-12">
+            <AddClassForm
+              createFormOpen={this.state.createButtonToggled}
+              toggleForm={this.toggleForm}
+            />
+          </div>
+          <div className="col-xs-12">
+            {this.props.loading ? <LoadingScreen /> :
               <div className="row center-xs">
                 <div className="col-xs-11">
                   <Paper style={{ padding: '2%' }} zDepth={1}>
@@ -101,9 +101,9 @@ export default class TeacherClassesPage extends React.Component {
                   </Paper>
                 </div>
               </div>
-            </div>
+            }
           </div>
-        }
+        </div>
       </div>
     );
   }

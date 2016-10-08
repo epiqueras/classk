@@ -52,7 +52,6 @@ export default class StudentClassesPage extends React.Component {
 
     return (
       <div>
-        {this.props.loading ? <LoadingScreen /> :
           <div className="row center-xs middle-xs">
             <div className="col-xs-12">
               <div className="row middle-xs center-xs">
@@ -69,22 +68,23 @@ export default class StudentClassesPage extends React.Component {
               </div>
             </div>
             <div className="col-xs-12">
-              <div className="row center-xs">
-                <div className="col-xs-11">
-                  <Paper style={{ padding: '2%' }} zDepth={1}>
-                    <div className="row start-xs">
-                      <Subheader style={{ textAlign: 'center', marginBottom: '2%' }}>
-                        Classes
-                      </Subheader>
-                      <Divider />
-                      {theClassesList}
-                    </div>
-                  </Paper>
+              {this.props.loading ? <LoadingScreen /> :
+                <div className="row center-xs">
+                  <div className="col-xs-11">
+                    <Paper style={{ padding: '2%' }} zDepth={1}>
+                      <div className="row start-xs">
+                        <Subheader style={{ textAlign: 'center', marginBottom: '2%' }}>
+                          Classes
+                        </Subheader>
+                        <Divider />
+                        {theClassesList}
+                      </div>
+                    </Paper>
+                  </div>
                 </div>
-              </div>
+              }
             </div>
           </div>
-        }
       </div>
     );
   }

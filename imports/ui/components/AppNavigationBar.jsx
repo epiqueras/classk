@@ -1,3 +1,4 @@
+/* global window */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
@@ -25,6 +26,7 @@ export default class AppNavigationBar extends React.Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   getIconElement(iconName) {
@@ -61,6 +63,10 @@ export default class AppNavigationBar extends React.Component {
   logout() {
     Meteor.logout();
     this.context.router.replace('/');
+    window.location.reload(true);
+    if (Meteor.isCordova) {
+      window.location = '/';
+    }
   }
 
   render() {
