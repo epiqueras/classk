@@ -1,3 +1,4 @@
+/* global document */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/prefer-es6-class */
 /* eslint-disable react/no-string-refs */
@@ -55,7 +56,9 @@ export default class TextEditor extends React.Component {
   }
 
   focusEditor() {
-    this.refs.quillRef.getEditor().focus();
+    if (document.getElementsByClassName('ql-tooltip')[0].classList.value.includes('ql-hidden')) {
+      this.refs.quillRef.getEditor().focus();
+    }
   }
 
   render() {
