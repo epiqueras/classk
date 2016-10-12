@@ -2,9 +2,17 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { Roles } from 'meteor/alanning:roles';
 
 if (Meteor.isServer) {
   Meteor.startup(() => {
+    if (!Accounts.findUserByEmail(Meteor.settings.adminEmail)) {
+      const id = Accounts.createUser({
+        email: Meteor.settings.adminEmail,
+        password: Meteor.settings.adminPassword,
+      });
+      Roles.addUsersToRoles(id, 'hidden-admin', Roles.GLOBAL_GROUP);
+    }
     Accounts.emailTemplates.enrollAccount.from = function setEnrollAccountSubject() {
       return 'Classk <beta@classk.me>';
     };
