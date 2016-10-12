@@ -1,4 +1,6 @@
 import React from 'react';
+import Subheader from 'material-ui/Subheader';
+import FlatButton from 'material-ui/FlatButton';
 
 const HomePage = () => (
   <div className="row middle-xs center-xs" style={{ height: '100vh' }}>
@@ -9,10 +11,17 @@ const HomePage = () => (
           width: '30%',
           marginTop: '-100px',
         }}
-        src="classk-logo.png"
+        src="classk-image.png"
         alt="Classk Logo"
       />
-      Beta
+      <div className="col-xs-12">
+        <Subheader>Beta</Subheader>
+        <Subheader>
+          <a href="mailto:beta@classk.me?subject=Beta%20Invite">
+            <FlatButton label="Get a School Account" primary />
+          </a>
+        </Subheader>
+      </div>
     </div>
   </div>
 );
