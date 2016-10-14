@@ -1,6 +1,6 @@
 # Classk? React/Meteor Web App
 
-I wanted to learn Meteor and React while building a fully functional web application following all the best practices outlined in the Meteor Guide. I also succesfuly ran it on iOS and Android using Cordova.
+I wanted to learn Meteor and React while building a fully functional web application following all the best practices outlined in the Meteor Guide. I also succesfuly created iOS and Android apps using Cordova.
 
 The app is a fairly simple Q&A platform for school homework.
 
