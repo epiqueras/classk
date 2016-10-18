@@ -6,26 +6,26 @@ The app is a fairly simple Q&A platform for school homework.
 
 <br/>
 
-##Schools
+## Schools
   - Log in and look at how many questions their students have unanswered.
   - Add students and teachers by writing their names and email addresses.
     - Teachers/Students receive a responsive html email with a button that takes them to set their new password.
   - They may also change the app's color palette and apply it to all of it's teacher and student accounts.
 
-##Teachers
+## Teachers
   - Log in and look at how many questions their students have unanswered.
   - Create classes and add students to them.
   - Add assignments to their classes and ask or answer questions.
   - Accept answers to their questions to close them.
 
-##Students
+## Students
   - Log in and look at how many questions their peers have unanswered.
   - Ask questions on assignments and answer their peers or teacher.
   - Accept answers to their questions to close them.
 
 <br/>
 
-###Some Packages I used:
+### Some Packages I used:
 - React Router for Routes
 - Meteor's accounts-base package
 - Alanning's Roles package for secured routes, methods, and publications
