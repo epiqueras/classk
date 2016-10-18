@@ -1,11 +1,24 @@
 {
   "name": "classk",
+  "version": "1.0.0",
+  "description": "I wanted to learn Meteor and React while
+    building a fully functional web application following all the best practices outlined in the Meteor Guide.",
   "private": true,
   "scripts": {
     "start": "meteor run",
     "lint": "eslint .",
     "pretest": "npm run lint --silent"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epiqueras/classk.git"
+  },
+  "author": "Enrique Piqueras",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/epiqueras/classk/issues"
+  },
+  "homepage": "https://github.com/epiqueras/classk#readme",
   "dependencies": {
     "bcrypt": "^0.8.7",
     "bootstrap": "^3.3.7",
