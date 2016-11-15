@@ -1,8 +1,7 @@
 {
   "name": "classk",
   "version": "1.0.0",
-  "description": "I wanted to learn Meteor and React while
-    building a fully functional web application following all the best practices outlined in the Meteor Guide.",
+  "description": "I wanted to learn Meteor and React while building a fully functional web application following all the best practices outlined in the Meteor Guide.",
   "private": true,
   "scripts": {
     "start": "meteor run",
