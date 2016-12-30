@@ -31,7 +31,7 @@
     "react-dom": "^15.4.0",
     "react-motion": "^0.4.5",
     "react-progressbar.js": "^0.2.0",
-    "react-quill": "^0.4.1",
+    "react-quill": "github:zenoamaro/react-quill",
     "react-router": "^2.7.0",
     "react-s-alert": "^1.1.4",
     "react-swipeable-views": "^0.7.9",
